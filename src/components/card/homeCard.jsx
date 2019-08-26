@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import AddCategory from './addCategory'
+import ModalCategory from '../modals/modalCategory'
 
-import Harp from '../assets/Harp.png'
+import Harp from '../../assets/Harp.png'
 
 const HomeCard = () => {
     return ( 
         <React.Fragment>
-            <AddCategory/>
+            <ModalCategory/>
             <div className="row pt-5">
                 <div className="card-group">
                     <div className="col-md-3 p-2">

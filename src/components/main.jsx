@@ -1,10 +1,10 @@
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
-import HomeCard from '../homeCard';
-import DetailsCard from '../detailsCard';
-import ProductDetails from '../productDetails'
-import Search from '../search'
+import HomeCard from './card/homeCard';
+import DetailsCard from './card/detailsCard';
+import ProductDetails from './productDetails'
+import Search from './search/search'
 
 const Container = () => {
     return ( 

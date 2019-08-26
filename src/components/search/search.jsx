@@ -1,5 +1,5 @@
 import React from 'react';
-import search from '../assets/icons/search.png'
+import search from '../../assets/icons/search.png'
 import SearchSetting from './searchSetting'
 
 const Search = () => {

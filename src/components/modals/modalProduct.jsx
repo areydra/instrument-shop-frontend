@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-class AddProduct extends Component {
+class ModalProduct extends Component {
     state = {
         modal: false
     };
@@ -84,4 +84,4 @@ class AddProduct extends Component {
     }
 }
 
-export default AddProduct;
+export default ModalProduct;

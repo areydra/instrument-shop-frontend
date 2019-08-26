@@ -5,7 +5,7 @@ import './App.css';
 
 //Layouts
 import Navbar from './components/layouts/navbar'
-import Main from './components/layouts/main'
+import Main from './components/main'
 import Footer from './components/layouts/footer'
 
 function App() {

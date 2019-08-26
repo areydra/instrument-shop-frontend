@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
 
-import options from '../assets/icons/options.png'
+import options from '../../assets/icons/options.png'
 
 class SearchSetting extends Component {
   constructor(props) {

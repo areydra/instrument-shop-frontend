@@ -1,6 +1,6 @@
 import React from 'react';
 import Harp from '../assets/Harp.png'
-import AddProduct from './addProduct'
+import ModalProduct from './modals/modalProduct'
 
 const ProductDetails = () => {
     return ( 
@@ -14,7 +14,7 @@ const ProductDetails = () => {
                         <h4 style={{fontWeight: 'bold'}}>Product Name</h4>
                     </div>
                     <div className="col-md-4 text-right">
-                        <AddProduct action="Edit" class="btn btn-secondary btn-sm mr-1"/>
+                        <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1"/>
                         <button className="btn btn-danger btn-sm ml-1">Delete</button>
                     </div>
                 </div>
