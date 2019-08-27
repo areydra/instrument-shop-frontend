@@ -13,7 +13,7 @@ class Home extends Component {
             <React.Fragment>
                 <ModalCategory />
                 <div className="row pt-5">
-                    <div className="card-group">
+                    <div className="card-group col-md-12">
                         {this.state.categories.map(cat => (
                             <CategoryCard key={cat.id} category={cat}/>
                         ))}

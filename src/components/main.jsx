@@ -13,6 +13,7 @@ const Container = () => {
                 <Search />
                 <Route path="/" exact component={Home}/>
                 <Route path="/products/category/:id" component={Products}/>
+                <Route path="/products/search/:name" component={Products} />
                 <Route path="/product-details/:name" component={ProductDetails} />
             </Router>
         </div>
