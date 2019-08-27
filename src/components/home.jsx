@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import ModalCategory from './modals/modalCategory'
-import HomeCard from './card/homeCard'
+import CategoryCard from './card/categoryCard'
 import categories from '../data/categories'
 
 class Home extends Component {
     state = { 
-        categories : []
+        categories: categories
      }
-     componentDidMount(){
-         this.setState({categories})
-     }
+
     render() { 
         return ( 
             <React.Fragment>
@@ -17,7 +15,7 @@ class Home extends Component {
                 <div className="row pt-5">
                     <div className="card-group">
                         {this.state.categories.map(cat => (
-                            <HomeCard key={cat.id} category={cat}/>
+                            <CategoryCard key={cat.id} category={cat}/>
                         ))}
                     </div>
                 </div>
