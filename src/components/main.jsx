@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
-import HomeCard from './card/homeCard';
+import Home from './home';
 import DetailsCard from './card/detailsCard';
 import ProductDetails from './productDetails'
 import Search from './search/search'
@@ -11,8 +11,8 @@ const Container = () => {
         <div className="container">
             <Router>
                 <Search />
-                <Route path="/" exact component={HomeCard}/>
-                <Route path="/details-category" component={DetailsCard}/>
+                <Route path="/" exact component={Home}/>
+                <Route path="/products/category/:name?" component={DetailsCard}/>
                 <Route path="/product-details" component={ProductDetails} />
             </Router>
         </div>

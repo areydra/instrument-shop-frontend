@@ -5,7 +5,8 @@ import ModalProduct from '../modals/modalProduct'
 
 import Harp from '../../assets/Harp.png'
 
-const CategoryCard = () => {
+const CategoryCard = props => {
+    console.log(props.match.params.name)
     return ( 
         <React.Fragment>
             <ModalProduct action="Add" class="btn button-add"/>

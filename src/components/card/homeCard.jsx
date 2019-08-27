@@ -1,61 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import ModalCategory from '../modals/modalCategory'
 
-import Harp from '../../assets/Harp.png'
-
-const HomeCard = () => {
+const HomeCard = props => {
+    let { name, imageUrl } = props.category
     return ( 
         <React.Fragment>
-            <ModalCategory/>
-            <div className="row pt-5">
-                <div className="card-group">
-                    <div className="col-md-3 p-2">
+            <div className="col-md-3 p-2">
                         <div className="card" style={{ border: 'none !important', background: '#F5D372', borderRadius: '25px' }}>
-                            <Link to="details-category" style={{color: 'black', textDecoration: 'none'}}>
+                            <Link to={"products/category/" + name.toLowerCase()} style={{color: 'black', textDecoration: 'none'}}>
                                 <div className="row">
                                     <div className="col-md-5" style={{ paddingTop: '25%' }}>
-                                        <h5 className="card-title text-right">Harp</h5>
+                                        <h5 className="card-title text-right">{name}</h5>
                                     </div>
                                     <div className="col-md-7" style={{ paddingLeft: '0px !important' }}>
-                                        <img src={Harp} className="card-img-top pt-3 pb-3" alt="..." style={{ height: '200px' }} />
+                                        <img src={imageUrl} className="card-img-top pt-3 pb-3" alt="..." style={{ height: '200px' }} />
                                     </div>
                                 </div>
                             </Link>
                         </div>
                     </div>
-                    <div className="col-md-3 p-2">
-                        <div className="card" style={{ border: 'none !important', background: '#F5D372', borderRadius: '25px' }}>
-                            <Link to="details-category" style={{ color: 'black', textDecoration: 'none' }}>
-                                <div className="row">
-                                    <div className="col-md-5" style={{ paddingTop: '25%' }}>
-                                        <h5 className="card-title text-right">Harp</h5>
-                                    </div>
-                                    <div className="col-md-7" style={{ paddingLeft: '0px !important' }}>
-                                        <img src={Harp} className="card-img-top pt-3 pb-3" alt="..." style={{ height: '200px' }} />
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="col-md-3 p-2">
-                        <div className="card" style={{ border: 'none !important', background: '#F5D372', borderRadius: '25px' }}>
-                            <Link to="details-category" style={{ color: 'black', textDecoration: 'none' }}>
-                                <div className="row">
-                                    <div className="col-md-5" style={{ paddingTop: '25%' }}>
-                                        <h5 className="card-title text-right">Harp</h5>
-                                    </div>
-                                    <div className="col-md-7" style={{ paddingLeft: '0px !important' }}>
-                                        <img src={Harp} className="card-img-top pt-3 pb-3" alt="..." style={{ height: '200px' }} />
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </React.Fragment>
-
      );
 }
  
