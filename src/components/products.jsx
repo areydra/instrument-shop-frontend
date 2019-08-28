@@ -1,52 +1,50 @@
-import React, { Component } from 'react';
-import ModalProduct from './modals/modalProduct'
-import ProductsCard from './card/productsCard'
+import React, { Component, Fragment } from 'react';
 
 import products from '../data/products'
+import ProductsCard from './card/productsCard'
+import ModalAddProduct from './modals/modalAddProduct'
 
 class Products extends Component {
     state = { 
-        products : products,
-        newProducts : {},
-     }
-    constructor() {
-        super();
-        this.handelAdd = this.handelAdd.bind(this);
+        products: [],
     }
 
-    handelAdd = product => {
-        // if(!this.product){
-        //     console.log('kosong')
-        // }else{
-            console.log(product.length)
-        // }
+    componentDidMount = async () => {
+       await this.setState({ products }) //jalankan setState sampai selesai (sampai tersimpan kedalam state) kemudian console.log. jika tidak await maka akan null (data belum tersimpan ke state)
     }
-    
-    render() { 
-        let products = '';
-        if(this.props.match.params.name) {
-            if(this.props.match.params.name === 'all'){
-                products = this.state.products
-            }else{
-                products = this.state.products.filter(prod => prod.name.toLowerCase() === this.props.match.params.name.toLowerCase())    
-            }
-        }else{
-            products = this.state.products.filter(prod => prod.id_category === this.props.match.params.id)
+
+    addProduct = async newProduct => {
+        let products = []
+        if(newProduct.name !== null && newProduct.name !== ''){
+            products.push(...this.state.products, newProduct)
+            await this.setState({ products })
         }
+    }
 
-        console.log(this.state.newProducts)
-        return ( 
-            <React.Fragment>
-                <ModalProduct action="Add" class="btn button-add" onAddProduct={this.handleAdd}/>
+    render() {
+        let products = []
+        
+        
+        //Jika ada params id (cek di main.jsx untuk melihat router) maka jalankan if statement berikut
+        if (this.props.match.params.id) products= this.state.products.filter(product => product.id_category == this.props.match.params.id) //.filter() kembalikan data yg product.id_category ssama dengan params.id (parseInt digunakan karna params bersifat string)
+        
+        //Jika ada params name (cek di main.jsx untuk melihat router) maka jalankan if statement berikut
+        if (this.props.match.params.name) (this.props.match.params.name === 'all') ? products = this.state.products : products = this.state.products.filter(product => product.name.toLowerCase() === this.props.match.params.name.toLowerCase()) //lowerCase() agar user bisa mencari product dengan huruf kecil tanpa harus spesifik seperti name productnya
+
+        console.log(this.state.products)
+
+        return (
+            <Fragment>
+                <ModalAddProduct action="Add" class="btn button-add" onAddProduct={this.addProduct} />
                 <div className="row pt-5">
                     <div className="card-group col-md-12">
                         {products.map(prd => (
-                            <ProductsCard key={prd.id} product={prd}/>
+                            <ProductsCard key={prd.id} product={prd} />
                         ))}
                     </div>
                 </div>
-            </React.Fragment>
-         );
+            </Fragment>
+        );
     }
 }
  
