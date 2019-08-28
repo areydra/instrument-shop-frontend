@@ -5,12 +5,31 @@ import products from '../data/products'
 
 class ProductDetails extends Component {
     state = { 
-        products : products
+        products : products,
+        product : null,
+        delete: false
+     }
+
+     handleEdit = async product => {
+        this.setState({ product })
+     }
+
+     handleDelete = () => {
+         this.setState({ delete : true })
+        // console.log('sampe')
      }
 
     render() { 
         let product = this.state.products.filter(product => product.name === this.props.match.params.name) 
-        let { id, name, description, image_url, availible_in, price, quantity } = product[0]
+        let { id, name, description, image_url, availible_in, price, quantity } = (this.state.product) ? this.state.product : product[0]
+
+        if(this.state.delete){
+            return (
+            <div className="alert alert-danger" style={{ marginTop: '100px' }}>
+                <h1><strong>Alert!</strong></h1><h3> Data has been deleted</h3>
+            </div>
+            )
+        }
 
         return ( 
             <div className="row col-md-12" style={{ paddingTop: '100px' }}>
@@ -23,8 +42,8 @@ class ProductDetails extends Component {
                             <h4 style={{ fontWeight: 'bold' }}>{name}</h4>
                         </div>
                         <div className="col-md-4 text-right">
-                            <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1" />
-                            <button className="btn btn-danger btn-sm ml-1">Delete</button>
+                            <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1" product={product[0]} onEdit={this.handleEdit} />
+                            <button className="btn btn-danger btn-sm ml-1" onClick={this.handleDelete}>Delete</button>
                         </div>
                     </div>
                     <div className="row pt-3">
