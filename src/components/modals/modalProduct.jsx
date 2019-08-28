@@ -68,7 +68,7 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Product Name</p>
                                 </div>
                                 <div className="col-md-9">
-                                    <input type="text" className="form-control" value={(this.props.product != undefined) ? this.state.product.name : ''} onChange={this.handleChangeName} />
+                                    <input type="text" className="form-control" value={(this.props.product !== undefined) ? this.state.product.name : ''} onChange={this.handleChangeName} />
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -76,8 +76,8 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Category</p>
                                 </div>
                                 <div className="col-md-3">
-                                    <select value={(this.props.product != undefined) ? this.state.product.id_category : ''} className="form-control" onChange={this.handleChangeCategory}>
-                                        <option value={(this.props.product != undefined) ? this.state.product.id_category : ''} selected hidden>{(this.props.product != undefined) ? this.state.product.id_category : 'Category'}</option>
+                                    <select value={(this.props.product !== undefined) ? this.state.product.id_category : ''} className="form-control" onChange={this.handleChangeCategory}>
+                                        <option value={(this.props.product !== undefined) ? this.state.product.id_category : ''} selected hidden>{(this.props.product !== undefined) ? this.state.product.id_category : 'Category'}</option>
                                         <option value='1'>Guitar</option>
                                         <option value='2'>Bass</option>
                                         <option value='2'>Harp</option>
@@ -90,8 +90,8 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Availible In</p>
                                 </div>
                                 <div className="col-md-3">
-                                    <select name="" value={(this.props.product != undefined) ? this.state.product.availible_in : ''} id="" className="form-control" onChange={this.handleChangeAvailibleIn}>
-                                        <option value={(this.props.product != undefined) ? this.state.product.availible_in : ''} selected hidden>{(this.props.product != undefined) ? this.state.product.availible_in : 'Availible In'}</option>
+                                    <select name="" value={(this.props.product !== undefined) ? this.state.product.availible_in : ''} id="" className="form-control" onChange={this.handleChangeAvailibleIn}>
+                                        <option value={(this.props.product !== undefined) ? this.state.product.availible_in : ''} selected hidden>{(this.props.product !== undefined) ? this.state.product.availible_in : 'Availible In'}</option>
                                         <option value="Bogor">Bogor</option>
                                         <option value="Jakarta">Jakarta</option>
                                         <option value="Bekasi">Bekasi</option>
@@ -104,7 +104,7 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Qty</p>
                                 </div>
                                 <div className="col-md-4">
-                                    <input type="text" className="form-control" value={(this.props.product != undefined) ? this.state.product.quantity : ''} onChange={this.handleChangeQuantity} />
+                                    <input type="text" className="form-control" value={(this.props.product !== undefined) ? this.state.product.quantity : ''} onChange={this.handleChangeQuantity} />
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -112,7 +112,7 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Price</p>
                                 </div>
                                 <div className="col-md-4">
-                                    <input type="text" className="form-control" value={(this.props.product != undefined) ? this.state.product.price : ''} onChange={this.handleChangePrice} />
+                                    <input type="text" className="form-control" value={(this.props.product !== undefined) ? this.state.product.price : ''} onChange={this.handleChangePrice} />
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -120,7 +120,7 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Description</p>
                                 </div>
                                 <div className="col-md-6">
-                                    <textarea name="" id="" cols="30" rows="5" className="form-control" value={(this.props.product != undefined) ? this.state.product.description : ''} onChange={this.handleChangeDescription} ></textarea>
+                                    <textarea name="" id="" cols="30" rows="5" className="form-control" value={(this.props.product !== undefined) ? this.state.product.description : ''} onChange={this.handleChangeDescription} ></textarea>
                                 </div>
                             </div>
                         </form>

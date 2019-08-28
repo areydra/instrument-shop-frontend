@@ -25,13 +25,13 @@ class Products extends Component {
     render() { 
         let products = '';
         if(this.props.match.params.name) {
-            if(this.props.match.params.name == 'all'){
+            if(this.props.match.params.name === 'all'){
                 products = this.state.products
             }else{
-                products = this.state.products.filter(prod => prod.name.toLowerCase() == this.props.match.params.name.toLowerCase())    
+                products = this.state.products.filter(prod => prod.name.toLowerCase() === this.props.match.params.name.toLowerCase())    
             }
         }else{
-            products = this.state.products.filter(prod => prod.id_category == this.props.match.params.id)
+            products = this.state.products.filter(prod => prod.id_category === this.props.match.params.id)
         }
 
         console.log(this.state.newProducts)

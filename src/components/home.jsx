@@ -1,41 +1,37 @@
 import React, { Component } from 'react';
 import ModalCategory from './modals/modalCategory'
-import CategoryCard from './card/categoryCard'
+import HomeCard from './card/homeCard'
 import categories from '../data/categories'
 
 class Home extends Component {
-    state = { 
-        categories: categories,
-        category: {}
+    state = {
+        categories : [],
+        category: null
     }
 
-    handleAdd = async category => { //async digunakan untuk memanggil callback setelah seleai digunakan. lihat then yg ada di modalCategory. dan juga sebagai asynchronus
-        this.setState({ category })
-        this.componentDidMount()
-    }
-
-    componentDidMount = async () =>{
-        let categories = [];
-
-        await categories.push(...this.state.categories); //membuat array categories baru dengan spreadoperator //await digunakan untuk mengunggu semua dirender baru menjalankan yg await
-        if (this.state.category.name || this.state.category.image_url) {
-            categories.push(this.state.category) //jika ada category tambahkan categories baru dengan category baru
-            this.setState({ category: {} })
-        } else {
-            categories = this.state.categories //jika tidak terpenuhi ubah categories baru isinya sesuai state.categories lama
-        }
+    componentDidMount = () => { //didMount otomatis dijalankan. biasanya digunakan untuk mengisi data state atau lainnya
         this.setState({ categories })
     }
+    
+    addCategory = async category => {
+        await this.setState({ category }) //tunggu hinga proses setState category selesai. Setelah selesai kemudian jalankan conditional dibawa
+        
+        if (this.state.category !== null && category !== null && category.name !== '') { //jika tidak ada yg kosong, maka jalankan code didalam kondisinya
+            let newCategories = [];
+            newCategories.push(...this.state.categories, this.state.category)  //menggabungkan object state categories yg telah di spread/dipecah, dan state category
 
-     render() { 
-         console.log(this.state.category)
+            this.setState({categories:newCategories}) //mengubah state categories dengan newCategories
+        }    
+    }
+    
+    render() {
         return ( 
             <React.Fragment>
-                <ModalCategory onAdd={this.handleAdd} />
+                <ModalCategory onAddCategory={this.addCategory} />
                 <div className="row pt-5">
                     <div className="card-group col-md-12">
                         {this.state.categories.map(cat => (
-                            <CategoryCard key={cat.id} category={cat}/>
+                            <HomeCard key={cat.id} category={cat}/>
                         ))}
                     </div>
                 </div>
@@ -46,3 +42,4 @@ class Home extends Component {
  
 export default Home;
 
+//Kenapa category ? karna card home berisi category category alat musik

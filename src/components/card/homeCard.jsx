@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-const CategoryCard = props => {
+const HomeCard = props => {
     let { image_url, name, id } = props.category
     return ( 
         <React.Fragment>
@@ -23,4 +23,4 @@ const CategoryCard = props => {
      );
 }
  
-export default CategoryCard;
+export default HomeCard;

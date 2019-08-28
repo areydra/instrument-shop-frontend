@@ -21,7 +21,7 @@ class ProductDetails extends Component {
 
     render() { 
         let product = this.state.products.filter(product => product.name === this.props.match.params.name) 
-        let { id, name, description, image_url, availible_in, price, quantity } = (this.state.product) ? this.state.product : product[0]
+        let { name, description, image_url, availible_in, price, quantity } = (this.state.product) ? this.state.product : product[0]
 
         if(this.state.delete){
             return (

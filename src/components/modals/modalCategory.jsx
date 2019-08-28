@@ -52,7 +52,7 @@ class ModalCategory extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <div className="modal-footer" style={{ border: 'none !important' }}>
-                            <button type="button" className="btn" style={{ padding: '5px 27px', fontWeight: 'bold', color: 'white', borderRadius: '6px', backgroundColor: '#E28935' }} onClick={ () => this.props.onAdd(this.state.category).then(this.toggle) }>Add</button>
+                            <button type="button" className="btn" style={{ padding: '5px 27px', fontWeight: 'bold', color: 'white', borderRadius: '6px', backgroundColor: '#E28935' }} onClick={() => this.props.onAddCategory(this.state.category).then(() => { this.setState({ category: null }); this.setState({ modal: false }) } ) }>Add</button>
                         </div>
                     </ModalFooter>
                 </Modal>
