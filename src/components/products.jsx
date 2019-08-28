@@ -26,8 +26,17 @@ class Products extends Component {
         
         
         //Jika ada params id (cek di main.jsx untuk melihat router) maka jalankan if statement berikut
-        if (this.props.match.params.id) products= this.state.products.filter(product => product.id_category == this.props.match.params.id) //.filter() kembalikan data yg product.id_category ssama dengan params.id (parseInt digunakan karna params bersifat string)
-        
+        if (this.props.match.params.id){
+            if(this.props.match.params.id.length > 4){
+                return (
+                    <div className="alert alert-danger" style={{ marginTop: '100px' }}>
+                        <h1><strong>Alert!</strong></h1><h3> 404 not found</h3>
+                    </div>
+                )
+            }
+            products = this.state.products.filter(product => product.id_category == this.props.match.params.id) //.filter() kembalikan data yg product.id_category ssama dengan params.id (parseInt digunakan karna params bersifat string)
+        } 
+
         //Jika ada params name (cek di main.jsx untuk melihat router) maka jalankan if statement berikut
         if (this.props.match.params.name) (this.props.match.params.name === 'all') ? products = this.state.products : products = this.state.products.filter(product => product.name.toLowerCase() === this.props.match.params.name.toLowerCase()) //lowerCase() agar user bisa mencari product dengan huruf kecil tanpa harus spesifik seperti name productnya
 

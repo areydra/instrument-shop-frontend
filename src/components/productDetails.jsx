@@ -20,7 +20,15 @@ class ProductDetails extends Component {
 
     render() { 
         let product = this.state.products.filter(product => product.name === this.props.match.params.name) 
-        let { name, description, image_url, availible_in, price, quantity } = (this.state.product) ? this.state.product : product[0]
+        console.log(product[0])
+        if(product[0] === undefined){
+            return (
+                <div className="alert alert-danger" style={{ marginTop: '100px' }}>
+                    <h1><strong>Alert!</strong></h1><h3> 404 not found</h3>
+                </div>
+            )
+        }
+
 
         if(this.state.delete){
             return (
@@ -33,12 +41,12 @@ class ProductDetails extends Component {
         return ( 
             <div className="row col-md-12" style={{ paddingTop: '100px' }}>
                 <div className="col-md-4">
-                    <img src={image_url} alt="COKS" />
+                    <img src={(this.state.product) ? this.state.product.image_url : product[0].image_url} alt="COKS" />
                 </div>
                 <div className="col-md-8">
                     <div className="row">
                         <div className="col-md-8">
-                            <h4 style={{ fontWeight: 'bold' }}>{name}</h4>
+                            <h4 style={{ fontWeight: 'bold' }}>{(this.state.product) ? this.state.product.name : product[0].name}</h4>
                         </div>
                         <div className="col-md-4 text-right">
                             <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1" product={product[0]} onEdit={this.handleEdit} />
@@ -47,7 +55,7 @@ class ProductDetails extends Component {
                     </div>
                     <div className="row pt-3">
                         <div className="col-md-12">
-                            <p>{description}</p>
+                            <p>{(this.state.product) ? this.state.product.description : product[0].description}</p>
                         </div>
                     </div>
                     <div className="row pt-3">
@@ -55,7 +63,7 @@ class ProductDetails extends Component {
                             Available in
                     </div>
                         <div className="col-md-5">
-                            <input type="text" className="form-control" value={availible_in} readOnly />
+                            <input type="text" className="form-control" value={(this.state.product) ? this.state.product.availible_in : product[0].availible_in} readOnly />
                         </div>
                     </div>
                     <div className="row pt-3">
@@ -63,7 +71,7 @@ class ProductDetails extends Component {
                             Quantity
                     </div>
                         <div className="col-md-5">
-                            <input type="text" className="form-control" value={quantity} readOnly />
+                            <input type="text" className="form-control" value={(this.state.product) ? this.state.product.quantity : product[0].quantity} readOnly />
                         </div>
                     </div>
                     <div className="row pt-3">
@@ -71,7 +79,7 @@ class ProductDetails extends Component {
                             Price
                     </div>
                         <div className="col-md-5">
-                            <input type="text" className="form-control" value={price} readOnly />
+                            <input type="text" className="form-control" value={(this.state.product) ? this.state.product.price : product[0].price} readOnly />
                         </div>
                     </div>
                 </div>
