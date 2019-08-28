@@ -16,7 +16,6 @@ class ProductDetails extends Component {
 
      handleDelete = () => {
          this.setState({ delete : true })
-        // console.log('sampe')
      }
 
     render() { 

@@ -15,31 +15,35 @@ class ModalProduct extends Component {
     }
 
     handleChangeCategory = event => {
-        this.setState({ product: {id: this.state.product.id,id_category: event.target.value,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,} })
+        this.setState({ product: {id: this.state.product.id,id_category: event.target.value,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
     }
 
     handleChangeName = event => {
-        this.setState({ product: {id: this.state.product.id,id_category: this.state.product.id_category,name: event.target.value,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,} })
+        this.setState({ product: {id: this.state.product.id,id_category: this.state.product.id_category,name: event.target.value,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
     }
 
     handleChangeAvailibleIn = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: event.target.value,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,} })
+        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: event.target.value,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
     }
 
     handleChangeImageUrl = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: event.target.value,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,} })
+        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: event.target.value,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
     }
 
     handleChangeDescription = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: event.target.value,price: this.state.product.price,quantity: this.state.product.quantity,} })
+        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: event.target.value,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
     }
 
     handleChangePrice = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: event.target.value,quantity: this.state.product.quantity,} })
+        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: event.target.value,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
     }
 
     handleChangeQuantity = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: event.target.value,} })
+        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: event.target.value,image_url: this.state.product.image_url} })
+    }
+    
+    handleChangeImageUrl = event => {
+        this.setState({ product: { id: this.state.product.id, id_category: this.state.product.id_category, name: this.state.product.name, availible_in: this.state.product.availible_in, image_url: this.state.product.image_url, description: this.state.product.description, price: this.state.product.price, quantity: this.state.product.quantity, image_url: event.target.value } })
     }
 
     render() {
@@ -111,6 +115,15 @@ class ModalProduct extends Component {
                                     <textarea name="" id="" cols="30" rows="5" className="form-control" value={(this.props.product !== undefined) ? this.state.product.description : ''} onChange={this.handleChangeDescription} ></textarea>
                                 </div>
                             </div>
+                            <div className="row pt-3">
+                                <div className="col-md-3" style={{ marginRight: '-55px !important' }}>
+                                    <p style={{ fontWeight: 'bold' }}>Image Url</p>
+                                </div>
+                                <div className="col-md-9">
+                                    <input type="text" className="form-control" value={(this.props.product !== undefined) ? this.state.product.image_url : ''} onChange={this.handleChangeImageUrl} />
+                                </div>
+                            </div>
+
                         </form>
                     </ModalBody>
                     <ModalFooter style={{borderTop: 'none'}}>
