@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import ModalProduct from './modals/modalProduct'
 
-import products from '../data/products'
-
 class ProductDetails extends Component {
     state = { 
-        products : products,
+        products : [],
         product : null,
         delete: false
      }
 
+     componentDidMount = async () => {
+         await this.setState({ products: this.props.location.state.products })
+     }
+
      handleEdit = async product => {
-        this.setState({ product })
+        await this.setState({ product })
      }
 
      handleDelete = () => {
@@ -20,7 +22,6 @@ class ProductDetails extends Component {
 
     render() { 
         let product = this.state.products.filter(product => product.name === this.props.match.params.name) 
-        console.log(product[0])
         if(product[0] === undefined){
             return (
                 <div className="alert alert-danger" style={{ marginTop: '100px' }}>

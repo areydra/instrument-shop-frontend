@@ -37,3 +37,7 @@
 .border-left-important{
   border-left: none !important
 }
+
+.border-none-important{
+  border: none !important
+}

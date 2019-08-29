@@ -31,7 +31,7 @@ class Home extends Component {
                 <div className="row pt-5">
                     <div className="card-group col-md-12">
                         {this.state.categories.map(cat => (
-                            <HomeCard key={cat.id} category={cat}/>
+                            <HomeCard key={cat.id} category={cat} categories={categories} />
                         ))}
                     </div>
                 </div>

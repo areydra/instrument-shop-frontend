@@ -24,7 +24,6 @@ class Products extends Component {
     render() {
         let products = []
         
-        
         //Jika ada params id (cek di main.jsx untuk melihat router) maka jalankan if statement berikut
         if (this.props.match.params.id){
             if(this.props.match.params.id.length > 4){
@@ -40,15 +39,13 @@ class Products extends Component {
         //Jika ada params name (cek di main.jsx untuk melihat router) maka jalankan if statement berikut
         if (this.props.match.params.name) (this.props.match.params.name === 'all') ? products = this.state.products : products = this.state.products.filter(product => product.name.toLowerCase() === this.props.match.params.name.toLowerCase()) //lowerCase() agar user bisa mencari product dengan huruf kecil tanpa harus spesifik seperti name productnya
 
-        console.log(this.state.products)
-
         return (
             <Fragment>
                 <ModalAddProduct action="Add" class="btn button-add" onAddProduct={this.addProduct} />
-                <div className="row pt-5">
+                <div className="row pt-3">
                     <div className="card-group col-md-12">
                         {products.map(prd => (
-                            <ProductsCard key={prd.id} product={prd} />
+                            <ProductsCard key={prd.id} product={prd} products={products}/>
                         ))}
                     </div>
                 </div>
