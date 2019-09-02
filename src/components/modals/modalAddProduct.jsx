@@ -15,7 +15,8 @@ class ModalAddProduct extends Component {
             price: '',
             quantity: ''
         },
-        branchs : this.props.branchs
+        branchs : this.props.branchs,
+        resetBranchs : this.props.branchs
     };
 
     toggle = () => {
@@ -114,7 +115,7 @@ class ModalAddProduct extends Component {
                         </form>
                     </ModalBody>
                     <ModalFooter style={{ borderTop: 'none' }}>
-                        <button type="button" className={this.props.class} onClick={() => this.props.onAddProduct(this.state.product, this.state.branchs).then( () => {this.setState({ modal: false })} )}>{this.props.action}</button>
+                        <button type="button" className={this.props.class} onClick={() => this.props.onAddProduct(this.state.product, this.state.branchs).then( () => {this.setState({ branchs: this.state.resetBranchs,modal: false })} )}>{this.props.action}</button>
                     </ModalFooter>
                 </Modal>
             </React.Fragment>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ModalProduct from './modals/modalProduct'
 import {connect} from 'react-redux'
-import { getProductDetails, deleteProduct } from '../publics/redux/actions/products';
+import { getProductDetails, getProductsByBranchs, deleteProduct } from '../publics/redux/actions/products';
 import { getCategoryDetail } from '../publics/redux/actions/categories';
 
 class ProductDetails extends Component {
@@ -16,13 +16,19 @@ class ProductDetails extends Component {
         },
         category: {
             id_category: 0
-        }
+        },
+        branchs : []
     }
 
     componentDidMount = async() => {
+        //Mengambil data product sesuai name
         await this.props.dispatch(getProductDetails(this.props.match.params.name))
         await this.props.dispatch(getCategoryDetail(this.props.product.id_category))
         await this.setState({ product: this.props.product, category: this.props.categories })
+
+        //menngambil product qty by branch 
+        await this.props.dispatch(getProductsByBranchs(this.state.product.id))
+        await this.setState({ branchs: this.props.branchs })
     }
 
     deleteProduct = async id => {
@@ -54,26 +60,32 @@ class ProductDetails extends Component {
                     </div>
                     <div className="row pt-3">
                         <div className="col-md-3">
-                            Available in
-                    </div>
-                        <div className="col-md-5">
-                            <input type="text" className="form-control" value={''} readOnly />
-                        </div>
-                    </div>
-                    <div className="row pt-3">
-                        <div className="col-md-3">
-                            Quantity
-                    </div>
-                        <div className="col-md-5">
-                            <input type="text" className="form-control" value={''} readOnly />
-                        </div>
-                    </div>
-                    <div className="row pt-3">
-                        <div className="col-md-3">
                             Price
-                    </div>
+                        </div>
                         <div className="col-md-5">
                             <input type="text" className="form-control" value={price} readOnly />
+                        </div>
+                    </div>
+                    <div className="row pt-3">
+                        <div className="col-md-12">
+                            <table className="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Branch</th>
+                                        <th scope="col">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        this.state.branchs.map(branch => (
+                                            <tr key={branch.id}>
+                                                <td>{branch.branch}</td>
+                                                <td>{branch.quantity}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -85,6 +97,7 @@ class ProductDetails extends Component {
 const mapStateToProps = state => {
     return{
         product : state.products.products[0],
+        branchs : state.products.products,
         categories : state.categories.categories[0]
     }
 }

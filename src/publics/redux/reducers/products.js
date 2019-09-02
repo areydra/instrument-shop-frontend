@@ -1,4 +1,4 @@
-const initialState = {
+    const initialState = {
     products : [],
     isLoading : false,
     isFulfilled : false,
@@ -31,6 +31,28 @@ const products = (state = initialState, action) => {
                 products: action.payload.data.response
             }
 
+        case 'GET_PRODUCTS_BY_BRANCHS_PENDING':
+            return{
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }    
+
+        case 'GET_PRODUCTS_BY_BRANCHS_REJECTED':
+            return{
+                ...state,
+                isLoading: false,
+                isRejected: true,
+            }
+
+        case 'GET_PRODUCTS_BY_BRANCHS_FULFILLED':
+            return{
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                products: action.payload.data.response
+            }
 
         case 'GET_PRODUCT_DETAILS_PENDING':
             return{
@@ -101,6 +123,30 @@ const products = (state = initialState, action) => {
                 isFulfilled: true,
                 // products: action.payload.data.response
             }
+
+        case 'POST_PRODUCTS_BRANCHS_PENDING':
+            return{
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }    
+
+        case 'POST_PRODUCTS_BRANCHS_REJECTED':
+            return{
+                ...state,
+                isLoading: false,
+                isRejected: true,
+            }
+
+        case 'POST_PRODUCTS_BRANCHS_FULFILLED':
+            return{
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                // products: action.payload.data.response
+            }
+
 
         default:
             return state
