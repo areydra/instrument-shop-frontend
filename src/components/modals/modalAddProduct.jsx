@@ -15,16 +15,7 @@ class ModalAddProduct extends Component {
             price: '',
             quantity: ''
         },
-        resetProduct: {
-            id: Date.now(),
-            id_category: '',
-            name: null,
-            description: "",
-            availible_in: "",
-            image_url: "",
-            price: '',
-            quantity: ''
-        }
+        branchs : this.props.branchs
     };
 
     toggle = () => {
@@ -39,6 +30,12 @@ class ModalAddProduct extends Component {
         
         //event.target.nama_attribute di tag html, contoh event.target.name = mengambil data yg ada di attribute name (input name="jodi") jadi akan mengambil value name yg berisi jodi
         this.setState({product : newForms})
+    }
+
+    handleBranchs = event => {
+        let newBranchs = {...this.state.branchs}
+        newBranchs[event.target.id] = event.target.value
+        this.setState({branchs:newBranchs})
     }
 
     render() {
@@ -61,37 +58,15 @@ class ModalAddProduct extends Component {
                                 <div className="col-md-3" style={{ marginRight: '-55px !important' }}>
                                     <p style={{ fontWeight: 'bold' }}>Category</p>
                                 </div>
-                                <div className="col-md-3">
-                                    <select className="form-control" name="id_category" onChange={this.handleForms}>
-                                        <option selected hidden>Category</option>
-                                        <option value='1'>Violin</option>
-                                        <option value='2'>Guitar</option>
-                                        <option value='3'>Bass</option>
-                                        <option value='4'>Harp</option>
-                                        <option value='5'>Ukulele</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="row pt-3">
-                                <div className="col-md-3" style={{ marginRight: '-55px !important' }}>
-                                    <p style={{ fontWeight: 'bold' }}>Availible In</p>
-                                </div>
-                                <div className="col-md-3">
-                                    <select name="availible_in" id="" className="form-control" onChange={this.handleForms}>
-                                        <option selected hidden>Availible In</option>
-                                        <option value="Bogor">Bogor</option>
-                                        <option value="Jakarta">Jakarta</option>
-                                        <option value="Bekasi">Bekasi</option>
-                                        <option value="Bandung">Bandung</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="row pt-3">
-                                <div className="col-md-3" style={{ marginRight: '-55px !important' }}>
-                                    <p style={{ fontWeight: 'bold' }}>Qty</p>
-                                </div>
                                 <div className="col-md-4">
-                                    <input type="text" className="form-control" name="quantity" onChange={this.handleForms} />
+                                    <select className="form-control" name="id_category" onChange={this.handleForms}>
+                                        <option hidden>Category</option>
+                                        {
+                                            this.props.categories.map(category => (
+                                                <option value={category.id} key={category.id}>{category.name.charAt(0).toUpperCase()+category.name.slice(1)}</option>
+                                            ))
+                                        }
+                                    </select>
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -106,7 +81,7 @@ class ModalAddProduct extends Component {
                                 <div className="col-md-3" style={{ marginRight: '-55px !important' }}>
                                     <p style={{ fontWeight: 'bold' }}>Description</p>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-9">
                                     <textarea name="description" id="" cols="30" rows="5" className="form-control" onChange={this.handleForms} ></textarea>
                                 </div>
                             </div>
@@ -118,10 +93,28 @@ class ModalAddProduct extends Component {
                                     <input type="text" className="form-control" name="image_url" onChange={this.handleForms} />
                                 </div>
                             </div>
+                            <div className="row pt-3">
+                                <div className="col-md-3" style={{ marginRight: '-55px !important' }}>
+                                    <p style={{ fontWeight: 'bold' }}>Availible In :</p>
+                                </div>
+                            </div>
+                            {
+                                this.props.branchs.map(branch => (
+                                    <div className="row pt-3" key={branch.id}>
+                                        <div className="col-md-2"></div>
+                                        <div className="col-md-2" style={{ marginRight: '-55px !important' }}>
+                                            <p style={{ fontWeight: '500' }}>{branch.name}</p>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <input type="number" className="form-control" name={branch.name} id={branch.id} placeholder='QTY' onChange={this.handleBranchs} />
+                                        </div>
+                                    </div>
+                                ))
+                            }
                         </form>
                     </ModalBody>
                     <ModalFooter style={{ borderTop: 'none' }}>
-                        <button type="button" className={this.props.class} onClick={() => this.props.onAddProduct(this.state.product).then( () => {this.setState({product: this.state.resetProduct}); this.setState({ modal: false })} )}>{this.props.action}</button>
+                        <button type="button" className={this.props.class} onClick={() => this.props.onAddProduct(this.state.product, this.state.branchs).then( () => {this.setState({ modal: false })} )}>{this.props.action}</button>
                     </ModalFooter>
                 </Modal>
             </React.Fragment>

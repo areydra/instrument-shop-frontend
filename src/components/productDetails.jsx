@@ -1,62 +1,55 @@
 import React, { Component } from 'react';
 import ModalProduct from './modals/modalProduct'
+import {connect} from 'react-redux'
+import { getProductDetails, deleteProduct } from '../publics/redux/actions/products';
+import { getCategoryDetail } from '../publics/redux/actions/categories';
 
 class ProductDetails extends Component {
-    state = { 
-        products : [],
-        product : null,
-        delete: false
-     }
+    state = {
+        product: {
+            id: 0,
+            id_category: 0,
+            image_url: "",
+            name: "",
+            price: 0,      
+            description: ""
+        },
+        category: {
+            id_category: 0
+        }
+    }
 
-     componentDidMount = async () => {
-         await this.setState({ products: this.props.location.state.products })
-     }
+    componentDidMount = async() => {
+        await this.props.dispatch(getProductDetails(this.props.match.params.name))
+        await this.props.dispatch(getCategoryDetail(this.props.product.id_category))
+        await this.setState({ product: this.props.product, category: this.props.categories })
+    }
 
-     handleEdit = async product => {
-        await this.setState({ product })
-     }
-
-     handleDelete = () => {
-         this.setState({ delete : true })
-     }
+    deleteProduct = async id => {
+        await this.props.dispatch(deleteProduct(id, this.state.category.name))
+    }
 
     render() { 
-        let product = this.state.products.filter(product => product.name === this.props.match.params.name) 
-        if(product[0] === undefined){
-            return (
-                <div className="alert alert-danger" style={{ marginTop: '100px' }}>
-                    <h1><strong>Alert!</strong></h1><h3> 404 not found</h3>
-                </div>
-            )
-        }
-
-
-        if(this.state.delete){
-            return (
-            <div className="alert alert-danger" style={{ marginTop: '100px' }}>
-                <h1><strong>Alert!</strong></h1><h3> Data has been deleted</h3>
-            </div>
-            )
-        }
+        let {id, name, description, image_url, price} = this.state.product
 
         return ( 
             <div className="row col-md-12" style={{ paddingTop: '100px' }}>
                 <div className="col-md-4">
-                    <img src={(this.state.product) ? this.state.product.image_url : product[0].image_url} alt="COKS" />
+                    <img src={image_url} alt="COKS" />
                 </div>
                 <div className="col-md-8">
                     <div className="row">
                         <div className="col-md-8">
-                            <h4 style={{ fontWeight: 'bold' }}>{(this.state.product) ? this.state.product.name : product[0].name}</h4>
+                            <h4 style={{ fontWeight: 'bold' }}>{name}</h4>
                         </div>
                         <div className="col-md-4 text-right">
-                            <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1" product={product[0]} onEdit={this.handleEdit} />
-                            <button className="btn btn-danger btn-sm ml-1" onClick={this.handleDelete}>Delete</button>
+                            <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1"/>
+                            <button className="btn btn-danger btn-sm ml-1" onClick={()=>this.deleteProduct(id)}>Delete</button>
                         </div>
                     </div>
                     <div className="row pt-3">
                         <div className="col-md-12">
-                            <p>{(this.state.product) ? this.state.product.description : product[0].description}</p>
+                            <p>{description}</p>
                         </div>
                     </div>
                     <div className="row pt-3">
@@ -64,7 +57,7 @@ class ProductDetails extends Component {
                             Available in
                     </div>
                         <div className="col-md-5">
-                            <input type="text" className="form-control" value={(this.state.product) ? this.state.product.availible_in : product[0].availible_in} readOnly />
+                            <input type="text" className="form-control" value={''} readOnly />
                         </div>
                     </div>
                     <div className="row pt-3">
@@ -72,7 +65,7 @@ class ProductDetails extends Component {
                             Quantity
                     </div>
                         <div className="col-md-5">
-                            <input type="text" className="form-control" value={(this.state.product) ? this.state.product.quantity : product[0].quantity} readOnly />
+                            <input type="text" className="form-control" value={''} readOnly />
                         </div>
                     </div>
                     <div className="row pt-3">
@@ -80,7 +73,7 @@ class ProductDetails extends Component {
                             Price
                     </div>
                         <div className="col-md-5">
-                            <input type="text" className="form-control" value={(this.state.product) ? this.state.product.price : product[0].price} readOnly />
+                            <input type="text" className="form-control" value={price} readOnly />
                         </div>
                     </div>
                 </div>
@@ -89,4 +82,11 @@ class ProductDetails extends Component {
     }
 }
  
-export default ProductDetails;
+const mapStateToProps = state => {
+    return{
+        product : state.products.products[0],
+        categories : state.categories.categories[0]
+    }
+}
+
+export default connect(mapStateToProps)(ProductDetails);

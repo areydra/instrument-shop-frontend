@@ -1,51 +1,42 @@
 import React, { Component, Fragment } from 'react';
+import {connect} from 'react-redux'
 
-import products from '../data/products'
 import ProductsCard from './card/productsCard'
 import ModalAddProduct from './modals/modalAddProduct'
+import {getProducts, postProduct} from '../publics/redux/actions/products'
+import {getCategories} from '../publics/redux/actions/categories'
+import {getBranchs} from '../publics/redux/actions/branchs'
 
 class Products extends Component {
-    state = { 
-        products: [],
+    state = {
+        products : [],
+        categories : [],
+        branchs: []
     }
 
     componentDidMount = async () => {
-       await this.setState({ products }) //jalankan setState sampai selesai (sampai tersimpan kedalam state) kemudian console.log. jika tidak await maka akan null (data belum tersimpan ke state)
+        await this.props.dispatch(getProducts(this.props.match.params.nameCategory))
+        await this.props.dispatch(getCategories())
+        await this.props.dispatch(getBranchs())
+        await this.setState({products:this.props.products, categories: this.props.categories, branchs: this.props.branchs})
     }
 
-    addProduct = async newProduct => {
-        let products = []
-        if(newProduct.name !== null && newProduct.name !== ''){
-            products.push(...this.state.products, newProduct)
-            await this.setState({ products })
-        }
+    handleAddProduct = async (product,branchs) => {
+        console.log(branchs)
+        // await this.props.dispatch(postProduct(product))
+        // await this.props.dispatch(getProducts(this.props.match.params.nameCategory))
+        // await this.setState({products:this.props.products})
     }
 
     render() {
-        let products = []
-        
-        //Jika ada params id (cek di main.jsx untuk melihat router) maka jalankan if statement berikut
-        if (this.props.match.params.id){
-            if(this.props.match.params.id.length > 4){
-                return (
-                    <div className="alert alert-danger" style={{ marginTop: '100px' }}>
-                        <h1><strong>Alert!</strong></h1><h3> 404 not found</h3>
-                    </div>
-                )
-            }
-            products = this.state.products.filter(product => product.id_category == this.props.match.params.id) //.filter() kembalikan data yg product.id_category ssama dengan params.id (parseInt digunakan karna params bersifat string)
-        } 
-
-        //Jika ada params name (cek di main.jsx untuk melihat router) maka jalankan if statement berikut
-        if (this.props.match.params.name) (this.props.match.params.name === 'all') ? products = this.state.products : products = this.state.products.filter(product => product.name.toLowerCase() === this.props.match.params.name.toLowerCase()) //lowerCase() agar user bisa mencari product dengan huruf kecil tanpa harus spesifik seperti name productnya
-
+        console.log(this.props.products)
         return (
             <Fragment>
-                <ModalAddProduct action="Add" class="btn button-add" onAddProduct={this.addProduct} />
+                <ModalAddProduct action="Add" class="btn button-add" onAddProduct={this.handleAddProduct} categories={this.state.categories} branchs={this.state.branchs} />
                 <div className="row pt-3">
                     <div className="card-group col-md-12">
-                        {products.map(prd => (
-                            <ProductsCard key={prd.id} product={prd} products={products}/>
+                        {this.state.products.map(prd => (
+                            <ProductsCard key={prd.id} product={prd} products={this.state.filterProducts} onChangeStateProducts={this.props.onChangeStateProducts} />
                         ))}
                     </div>
                 </div>
@@ -54,4 +45,12 @@ class Products extends Component {
     }
 }
  
-export default Products;
+const mapStateToProps = state => {
+    return{
+        products: state.products.products,
+        categories: state.categories.categories,
+        branchs: state.branchs.branchs
+    }
+}
+
+export default connect(mapStateToProps)(Products);

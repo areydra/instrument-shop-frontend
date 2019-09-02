@@ -14,38 +14,6 @@ class ModalProduct extends Component {
         }));
     }
 
-    handleChangeCategory = event => {
-        this.setState({ product: {id: this.state.product.id,id_category: event.target.value,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
-    }
-
-    handleChangeName = event => {
-        this.setState({ product: {id: this.state.product.id,id_category: this.state.product.id_category,name: event.target.value,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
-    }
-
-    handleChangeAvailibleIn = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: event.target.value,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
-    }
-
-    handleChangeImageUrl = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: event.target.value,description: this.state.product.description,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
-    }
-
-    handleChangeDescription = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: event.target.value,price: this.state.product.price,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
-    }
-
-    handleChangePrice = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: event.target.value,quantity: this.state.product.quantity,image_url: this.state.product.image_url} })
-    }
-
-    handleChangeQuantity = event => {
-        this.setState({product: {id: this.state.product.id,id_category: this.state.product.id_category,name: this.state.product.name,availible_in: this.state.product.availible_in,image_url: this.state.product.image_url,description: this.state.product.description,price: this.state.product.price,quantity: event.target.value,image_url: this.state.product.image_url} })
-    }
-    
-    handleChangeImageUrl = event => {
-        this.setState({ product: { id: this.state.product.id, id_category: this.state.product.id_category, name: this.state.product.name, availible_in: this.state.product.availible_in, image_url: this.state.product.image_url, description: this.state.product.description, price: this.state.product.price, quantity: this.state.product.quantity, image_url: event.target.value } })
-    }
-
     render() {
         return (
             <React.Fragment>
@@ -59,7 +27,7 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Product Name</p>
                                 </div>
                                 <div className="col-md-9">
-                                    <input type="text" className="form-control" value={(this.props.product !== undefined) ? this.state.product.name : ''} onChange={this.handleChangeName} />
+                                    <input type="text" className="form-control" value={''} onChange={''} />
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -67,8 +35,8 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Category</p>
                                 </div>
                                 <div className="col-md-3">
-                                    <select value={(this.props.product !== undefined) ? this.state.product.id_category : ''} className="form-control" onChange={this.handleChangeCategory}>
-                                        <option value={(this.props.product !== undefined) ? this.state.product.id_category : ''} selected hidden>{(this.props.product !== undefined) ? this.state.product.id_category : 'Category'}</option>
+                                    <select value={''} className="form-control" onChange={''}>
+                                        <option value={''} selected hidden>{'Category'}</option>
                                         <option value='1'>Violin</option>
                                         <option value='2'>Guitar</option>
                                         <option value='3'>Bass</option>
@@ -82,8 +50,8 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Availible In</p>
                                 </div>
                                 <div className="col-md-3">
-                                    <select name="" value={(this.props.product !== undefined) ? this.state.product.availible_in : ''} id="" className="form-control" onChange={this.handleChangeAvailibleIn}>
-                                        <option value={(this.props.product !== undefined) ? this.state.product.availible_in : ''} selected hidden>{(this.props.product !== undefined) ? this.state.product.availible_in : 'Availible In'}</option>
+                                    <select name="" value={''} id="" className="form-control" onChange={''}>
+                                        <option value={''} selected hidden>{}</option>
                                         <option value="Bogor">Bogor</option>
                                         <option value="Jakarta">Jakarta</option>
                                         <option value="Bekasi">Bekasi</option>
@@ -96,7 +64,7 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Qty</p>
                                 </div>
                                 <div className="col-md-4">
-                                    <input type="text" className="form-control" value={(this.props.product !== undefined) ? this.state.product.quantity : ''} onChange={this.handleChangeQuantity} />
+                                    <input type="text" className="form-control" value={''} onChange={''} />
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -104,7 +72,7 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Price</p>
                                 </div>
                                 <div className="col-md-4">
-                                    <input type="text" className="form-control" value={(this.props.product !== undefined) ? this.state.product.price : ''} onChange={this.handleChangePrice} />
+                                    <input type="text" className="form-control" value={''} onChange={''} />
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -112,7 +80,7 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Description</p>
                                 </div>
                                 <div className="col-md-6">
-                                    <textarea name="" id="" cols="30" rows="5" className="form-control" value={(this.props.product !== undefined) ? this.state.product.description : ''} onChange={this.handleChangeDescription} ></textarea>
+                                    <textarea name="" id="" cols="30" rows="5" className="form-control" value={''} onChange={''} ></textarea>
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -120,14 +88,14 @@ class ModalProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Image Url</p>
                                 </div>
                                 <div className="col-md-9">
-                                    <input type="text" className="form-control" value={(this.props.product !== undefined) ? this.state.product.image_url : ''} onChange={this.handleChangeImageUrl} />
+                                    <input type="text" className="form-control" value={''} onChange={''} />
                                 </div>
                             </div>
 
                         </form>
                     </ModalBody>
                     <ModalFooter style={{borderTop: 'none'}}>
-                        <button type="button" className={this.props.class} onClick={() => this.props.onEdit(this.state.product).then(this.setState({ modal: false }))}>{this.props.action}</button>
+                        <button type="button" className={this.props.class} onClick={''}>{}</button>
                     </ModalFooter>
                 </Modal>
             </React.Fragment>

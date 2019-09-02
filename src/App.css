@@ -41,3 +41,11 @@
 .border-none-important{
   border: none !important
 }
+
+.btn-add-category{
+  padding: 5px 27px;
+  font-weight: bold;
+  color: white;
+  border-radius: 6px;
+  background-color: #E28935
+}

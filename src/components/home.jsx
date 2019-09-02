@@ -1,45 +1,51 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux' 
+
 import ModalCategory from './modals/modalCategory'
 import HomeCard from './card/homeCard'
-import categories from '../data/categories'
+import {getCategories, postCategory} from '../publics/redux/actions/categories'
 
 class Home extends Component {
     state = {
         categories : [],
-        category: null
     }
 
-    componentDidMount = () => { //didMount otomatis dijalankan. biasanya digunakan untuk mengisi data state atau lainnya
-        this.setState({ categories })
+    componentDidMount = async () => {
+        await this.props.dispatch(getCategories()) //menggunakan function getCategories() dari mapToDispatch dibawah
+        this.setState({categories:this.props.categories}) //mengambil variabel categories dari mapStatToProps dibawah
     }
-    
-    addCategory = async category => {
-        await this.setState({ category }) //tunggu hinga proses setState category selesai. Setelah selesai kemudian jalankan conditional dibawa
-        
-        if (this.state.category !== null && category !== null && category.name !== '') { //jika tidak ada yg kosong, maka jalankan code didalam kondisinya
-            let newCategories = [];
-            newCategories.push(...this.state.categories, this.state.category)  //menggabungkan object state categories yg telah di spread/dipecah, dan state category
 
-            this.setState({categories:newCategories}) //mengubah state categories dengan newCategories
-        }    
+    addNewCategory = async newCategory => {
+        await this.props.dispatch(postCategory(newCategory))
+        await this.props.dispatch(getCategories())
+        this.setState({ categories: this.props.categories })
+
     }
-    
-    render() {
+
+    render() {        
         return ( 
             <React.Fragment>
-                <ModalCategory onAddCategory={this.addCategory} />
+                <ModalCategory categories={this.state.categories} onAddCategory={this.addNewCategory} />
                 <div className="row pt-5">
                     <div className="card-group col-md-12">
                         {this.state.categories.map(cat => (
-                            <HomeCard key={cat.id} category={cat} categories={categories} />
+                            <HomeCard key={cat.id} category={cat} categories={this.state.categories} />
                         ))}
                     </div>
                 </div>
             </React.Fragment>
-         );
+            );
     }
 }
  
-export default Home;
-
-//Kenapa category ? karna card home berisi category category alat musik
+const mapStateToProps = (state) => {
+    return {
+        categories: state.categories.categories //membuat props categories dengan value state.categories
+    }
+} 
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         getCategories : () => dispatch(this.getCategories()) //paramaeter products berasal dari import getCategories diatas
+//     }
+// }
+export default connect(mapStateToProps)(Home);
