@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom'
-
 import search from '../../assets/icons/search.png'
 import SearchSetting from './searchSetting'
 
@@ -13,6 +11,12 @@ class Search extends Component {
         this.setState({search : event.target.value})
     }
 
+    search = event => {
+        if(event.keyCode === 13){
+            window.location = (this.state.search) ? '/products/search/' + this.state.search : '/products/search/all'
+        }
+    }
+
     render() { 
         return ( 
             <div className="row pb-3">
@@ -20,12 +24,12 @@ class Search extends Component {
                     <div className="input-group box-shadow">
                         <div className="input-group-prepend">
                             <div className="input-group-text background-none">                                
-                                <Link to={(this.state.search) ? '/products/search/' + this.state.search : '/products/search/all'}>
+                                <a href={(this.state.search) ? '/products/search/' + this.state.search : '/products/search/all'}>
                                     <img src={search} alt="COGS" style={{ width: '20px' }} />
-                                </Link>
+                                </a>
                             </div>
                         </div>
-                        <input type="text" placeholder="Search" className="form-control border-left-important" onChange={this.handleSearch} />
+                        <input type="text" placeholder="Search" className="form-control border-left-important" onKeyUp={this.search} onChange={this.handleSearch} />
                     </div>
                 </div>
                 <SearchSetting />

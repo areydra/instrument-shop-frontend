@@ -31,6 +31,53 @@ const products = (state = initialState, action) => {
                 products: action.payload.data.response
             }
 
+        case 'GET_ALL_PRODUCTS_PENDING':
+            return{
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }    
+
+        case 'GET_ALL_PRODUCTS_REJECTED':
+            return{
+                ...state,
+                isLoading: false,
+                isRejected: true,
+            }
+
+        case 'GET_ALL_PRODUCTS_FULFILLED':
+            return{
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                products: action.payload.data.response
+            }
+
+        case 'SEARCH_PRODUCTS_PENDING':
+            return{
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }    
+
+        case 'SEARCH_PRODUCTS_REJECTED':
+            return{
+                ...state,
+                isLoading: false,
+                isRejected: true,
+            }
+
+        case 'SEARCH_PRODUCTS_FULFILLED':
+            return{
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                products: action.payload.data.response
+            }
+
+
         case 'GET_PRODUCTS_BY_BRANCHS_PENDING':
             return{
                 ...state,

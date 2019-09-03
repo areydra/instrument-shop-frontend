@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux'
+import Swal from 'sweetalert2'
 
 import ProductsCard from './card/productsCard'
 import ModalAddProduct from './modals/modalAddProduct'
-import {getProducts, postProduct, postProductsBranchs} from '../publics/redux/actions/products'
+import {getProducts, getAllProducts, searchProducts, postProduct, postProductsBranchs} from '../publics/redux/actions/products'
 import {getCategories} from '../publics/redux/actions/categories'
 import {getBranchs} from '../publics/redux/actions/branchs'
 
@@ -19,13 +20,24 @@ class Products extends Component {
         await this.props.dispatch(getCategories())
         await this.props.dispatch(getBranchs())
         await this.setState({products:this.props.products, categories: this.props.categories, branchs: this.props.branchs})
+
+        if (this.props.match.params.name) {
+            if (this.props.match.params.name === 'all') {
+                await this.props.dispatch(getAllProducts())
+                await this.setState({products : this.props.products})
+            } else {
+                await this.props.dispatch(searchProducts(this.props.match.params.name))
+                await this.setState({products : this.props.products})
+            }
+        }
     }
 
     handleAddProduct = async (product,branchs) => {
 
         // ADD PRODUCTS AND RE RENDER DATA PRODUCTS WITH getProducts
         await this.props.dispatch(postProduct(product))
-        await this.props.dispatch(getProducts(this.props.match.params.nameCategory))
+        //jika parameter nya berisi name category maka dispatcy getProducts berdasarkan nameCategory, jika tidak maka isi dengan getAllProducts
+        await this.props.dispatch((this.props.match.params.nameCategory) ? getProducts(this.props.match.params.nameCategory) : getAllProducts())
         await this.setState({products:this.props.products})
 
         //mengambil data branchs dan dipisah beradasarkan key dan value, key = id_branch, value = quantity
@@ -43,7 +55,18 @@ class Products extends Component {
         for (let index = 0; index < newBranchs.length; index++) {
             await this.props.dispatch(postProductsBranchs(newBranchs[index]))
         }
+        
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        })
 
+        Toast.fire({
+            type: 'success',
+            title: `Product ${this.state.products[this.state.products.length - 1].name} has been created`
+        })
     }
 
     render() {

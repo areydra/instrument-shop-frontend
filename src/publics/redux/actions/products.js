@@ -7,6 +7,20 @@ export const getProducts = category => {
     }
 }
 
+export const getAllProducts = () => {
+    return {
+        type: 'GET_ALL_PRODUCTS',
+        payload: axios.get(`http://localhost:8000/api/products`)
+    }
+}
+
+export const searchProducts = name => {
+    return {
+        type: 'SEARCH_PRODUCTS',
+        payload: axios.get(`http://localhost:8000/api/products/search/${name}`)
+    }
+}
+
 export const getProductsByBranchs = id_product => {
     return {
         type: 'GET_PRODUCTS_BY_BRANCHS',
