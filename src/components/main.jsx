@@ -13,8 +13,10 @@ class Main extends Component {
                 <Router>
                     <Search />
                     <Route path="/" exact component={Home} />
-                    <Route path="/products/category/:nameCategory" component={Products}/>
-                    <Route path="/products/search/:name" component={Products} />
+                    {/* <Route path="/products/category/:nameCategory" exact component={Products}/> */}
+                    <Route path="/products/category/:nameCategory/page/:page" exact component={Products}/>
+                    {/* <Route path="/products/search/:name" exact component={Products} /> */}
+                    <Route path="/products/search/:name/page/:page" exact component={Products} />
                     <Route path="/product-details/:name" component={ProductDetails} />
                 </Router>
             </div>

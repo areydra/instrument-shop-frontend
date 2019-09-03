@@ -1,35 +1,32 @@
 import React, { Component, Fragment } from 'react';
 import {connect} from 'react-redux'
 import Swal from 'sweetalert2'
+import _ from 'lodash'
+import {Link} from 'react-router-dom'
 
 import ProductsCard from './card/productsCard'
 import ModalAddProduct from './modals/modalAddProduct'
-import {getProducts, getAllProducts, searchProducts, postProduct, postProductsBranchs} from '../publics/redux/actions/products'
+import {getProductsByCategory, getProductsPaginate, getAllProducts, searchProducts, postProduct, postProductsBranchs} from '../publics/redux/actions/products'
 import {getCategories} from '../publics/redux/actions/categories'
 import {getBranchs} from '../publics/redux/actions/branchs'
 
 class Products extends Component {
     state = {
         products : [],
+        productsPaginate: [],
         categories : [],
-        branchs: []
+        branchs: [],
+        currentPage : this.props.match.params.page,
+        limitPage : 1,
+        productPages : [],
+        pageOnload : 0
     }
 
     componentDidMount = async () => {
-        await this.props.dispatch(getProducts(this.props.match.params.nameCategory))
         await this.props.dispatch(getCategories())
         await this.props.dispatch(getBranchs())
-        await this.setState({products:this.props.products, categories: this.props.categories, branchs: this.props.branchs})
-
-        if (this.props.match.params.name) {
-            if (this.props.match.params.name === 'all') {
-                await this.props.dispatch(getAllProducts())
-                await this.setState({products : this.props.products})
-            } else {
-                await this.props.dispatch(searchProducts(this.props.match.params.name))
-                await this.setState({products : this.props.products})
-            }
-        }
+        // await this.props.dispatch(getProductsPaginate(0, this.state.limitPage))
+        await this.setState({categories: this.props.categories, branchs: this.props.branchs})
     }
 
     handleAddProduct = async (product,branchs) => {
@@ -37,7 +34,7 @@ class Products extends Component {
         // ADD PRODUCTS AND RE RENDER DATA PRODUCTS WITH getProducts
         await this.props.dispatch(postProduct(product))
         //jika parameter nya berisi name category maka dispatcy getProducts berdasarkan nameCategory, jika tidak maka isi dengan getAllProducts
-        await this.props.dispatch((this.props.match.params.nameCategory) ? getProducts(this.props.match.params.nameCategory) : getAllProducts())
+        await this.props.dispatch((this.props.match.params.nameCategory) ? getProductsByCategory(this.props.match.params.nameCategory) : getAllProducts())
         await this.setState({products:this.props.products})
 
         //mengambil data branchs dan dipisah beradasarkan key dan value, key = id_branch, value = quantity
@@ -69,18 +66,67 @@ class Products extends Component {
         })
     }
 
+    handlePage = async page => {
+        let pageOnload = this.state.pageOnload + 1
+        let offset = (page - 1) * this.state.limitPage
+        await this.props.dispatch(getProductsPaginate(offset, this.state.limitPage))
+        await this.setState({ products: this.props.products, pageOnload })
+    }
+
+    productByCategory = async category => {
+        let pageOnload = this.state.pageOnload + 1
+        await this.props.dispatch(getProductsByCategory(category))
+        await this.setState({ products: this.props.products, pageOnload })
+    }
+
+    productBySearch = async search => {
+        let pageOnload = this.state.pageOnload + 1
+        if (search === 'all') {
+            console.log(search)
+            await this.props.dispatch(getAllProducts())
+            await this.setState({ products: this.props.products, productPages: this.props.products, pageOnload }) //membuat page product terpisah agar jumlah pages tidak tertimpa
+        } else {
+            console.log(search)
+            await this.props.dispatch(searchProducts(search))
+            await this.setState({ products: this.props.products, productPages: this.props.products, pageOnload })
+        }
+    }
+
     render() {
+        let { products, limitPage, categories, branchs, filterProducts, productPages, pageOnload } = this.state
+        let { page, nameCategory } = this.props.match.params
+
+        //selama pageOnload kurang dari 3 maka handlePage akan terus terender. karena didalam method render itu selalu merender ulang
+        if(!nameCategory && pageOnload < 3){
+            this.handlePage(page)
+            this.productBySearch(this.props.match.params.name)
+        }else if(nameCategory && pageOnload < 3){
+            this.productByCategory(nameCategory)
+        }
+
+        const totalPages = Math.ceil(productPages.length / limitPage)
+        const pages = _.range(1, totalPages + 1)
+        
         return (
             <Fragment>
-                <ModalAddProduct action="Add" class="btn button-add" onAddProduct={this.handleAddProduct} categories={this.state.categories} branchs={this.state.branchs} />
-                <div className="row pt-3">
-                    <div className="card-group col-md-12">
-                        {this.state.products.map(prd => (
-                            <ProductsCard key={prd.id} product={prd} products={this.state.filterProducts} onChangeStateProducts={this.props.onChangeStateProducts} />
-                        ))}
+                    <ModalAddProduct action="Add" class="btn button-add" onAddProduct={this.handleAddProduct} categories={categories} branchs={branchs} />
+                    <div className="row pt-3">
+                        <div className="card-group col-md-12">
+                            {products.map(prd => (
+                                <ProductsCard key={prd.id} product={prd} products={filterProducts} onChangeStateProducts={this.props.onChangeStateProducts} />
+                                ))}
+                        </div>
                     </div>
-                </div>
-            </Fragment>
+                    <nav aria-label="Page navigation example">
+                        <ul className="pagination">
+                            {
+                                pages.map(page => (
+                                    <li className={(page === parseInt(this.props.match.params.page)) ? "page-item active" : "page-item"} key={page}><Link className="page-link" to={(nameCategory) ? `/products/category/${nameCategory}/page/${page}` : `/products/search/all/page/${page}`} onClick={()=>this.handlePage(page)}>{page}</Link></li>
+                                ))
+                            }
+                        </ul>
+                    </nav>
+                </Fragment>
         );
     }
 }

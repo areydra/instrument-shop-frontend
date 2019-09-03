@@ -7,7 +7,7 @@ const HomeCard = props => {
         <React.Fragment>
             <div className="col-md-3 p-2">
                         <div className="card" style={{ border: 'none !important', background: '#F5D372', borderRadius: '25px' }}>
-                            <Link to={{ pathname: "products/category/" + name.toLowerCase(), state: { categories: props.categories } }} style={{color: 'black', textDecoration: 'none'}}>
+                            <Link to={{ pathname: `products/category/${name.toLowerCase()}/page/1`, state: { categories: props.categories } }} style={{color: 'black', textDecoration: 'none'}}>
                                 <div className="row">
                                     <div className="col-md-5" style={{ paddingTop: '25%' }}>
                                         <h5 className="card-title text-right">{name}</h5>

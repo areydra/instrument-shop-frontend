@@ -13,7 +13,7 @@ class Search extends Component {
 
     search = event => {
         if(event.keyCode === 13){
-            window.location = (this.state.search) ? '/products/search/' + this.state.search : '/products/search/all'
+            window.location = (this.state.search) ? `/products/search/${this.state.search}/page/1` : `/products/search/all/page/1`
         }
     }
 
@@ -24,7 +24,7 @@ class Search extends Component {
                     <div className="input-group box-shadow">
                         <div className="input-group-prepend">
                             <div className="input-group-text background-none">                                
-                                <a href={(this.state.search) ? '/products/search/' + this.state.search : '/products/search/all'}>
+                                <a href={(this.state.search) ? `/products/search/${this.state.search}/page/1` : `/products/search/all/page/1`}>
                                     <img src={search} alt="COGS" style={{ width: '20px' }} />
                                 </a>
                             </div>

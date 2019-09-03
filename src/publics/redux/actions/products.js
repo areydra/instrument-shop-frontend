@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const getProducts = category => {
+export const getProductsByCategory = category => {
     return{
         type: 'GET_PRODUCTS_BY_CATEGORY',
         payload: axios.get(`http://localhost:8000/api/products/category/${category}`)
@@ -11,6 +11,13 @@ export const getAllProducts = () => {
     return {
         type: 'GET_ALL_PRODUCTS',
         payload: axios.get(`http://localhost:8000/api/products`)
+    }
+}
+
+export const getProductsPaginate = (offset, limit) => {
+    return {
+        type: 'GET_PRODUCTS_PAGINATE',
+        payload: axios.get(`http://localhost:8000/api/products/page/${offset}/${limit}`)
     }
 }
 
