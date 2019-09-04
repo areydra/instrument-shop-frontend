@@ -1,14 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import {connect} from 'react-redux'
-import Swal from 'sweetalert2'
 import _ from 'lodash'
+import Swal from 'sweetalert2'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import React, { Component, Fragment } from 'react';
 
 import ProductsCard from './card/productsCard'
 import ModalAddProduct from './modals/modalAddProduct'
-import {getProductsByCategory, getProductsPaginate, getAllProducts, searchProducts, postProduct, postProductsBranchs} from '../publics/redux/actions/products'
-import {getCategories} from '../publics/redux/actions/categories'
 import {getBranchs} from '../publics/redux/actions/branchs'
+import {getCategories} from '../publics/redux/actions/categories'
+import {getProductsByCategory, getAllProducts, postProduct, postProductsBranchs} from '../publics/redux/actions/products'
 
 class Products extends Component {
     state = {
@@ -17,15 +17,15 @@ class Products extends Component {
         categories : [],
         branchs: [],
         currentPage : this.props.match.params.page,
-        limitPage : 1,
+        limitPage : 10,
         productPages : [],
-        pageOnload : 0
+        pageOnload : 0,
+        newProduct : false
     }
 
     componentDidMount = async () => {
         await this.props.dispatch(getCategories())
         await this.props.dispatch(getBranchs())
-        // await this.props.dispatch(getProductsPaginate(0, this.state.limitPage))
         await this.setState({categories: this.props.categories, branchs: this.props.branchs})
     }
 
@@ -35,7 +35,7 @@ class Products extends Component {
         await this.props.dispatch(postProduct(product))
         //jika parameter nya berisi name category maka dispatcy getProducts berdasarkan nameCategory, jika tidak maka isi dengan getAllProducts
         await this.props.dispatch((this.props.match.params.nameCategory) ? getProductsByCategory(this.props.match.params.nameCategory) : getAllProducts())
-        await this.setState({products:this.props.products})
+        await this.setState({newProduct: true})
 
         //mengambil data branchs dan dipisah beradasarkan key dan value, key = id_branch, value = quantity
         let id_product = this.state.products[this.state.products.length - 1].id //mengambil index terakhir dari products dengan cara length dikurang 1. kemudian ambil id nya
@@ -62,46 +62,33 @@ class Products extends Component {
 
         Toast.fire({
             type: 'success',
-            title: `Product ${this.state.products[this.state.products.length - 1].name} has been created`
+            title: `Product ${product.name} has been created`
         })
     }
 
-    handlePage = async page => {
-        let pageOnload = this.state.pageOnload + 1
-        let offset = (page - 1) * this.state.limitPage
-        await this.props.dispatch(getProductsPaginate(offset, this.state.limitPage))
-        await this.setState({ products: this.props.products, pageOnload })
-    }
-
-    productByCategory = async category => {
+    handlePage = async (currentPage, limitPage, category) => {
         let pageOnload = this.state.pageOnload + 1
         await this.props.dispatch(getProductsByCategory(category))
-        await this.setState({ products: this.props.products, pageOnload })
-    }
+        await this.setState({ productPages: this.props.products, pageOnload, newProduct: false })
 
-    productBySearch = async search => {
-        let pageOnload = this.state.pageOnload + 1
-        if (search === 'all') {
-            console.log(search)
-            await this.props.dispatch(getAllProducts())
-            await this.setState({ products: this.props.products, productPages: this.props.products, pageOnload }) //membuat page product terpisah agar jumlah pages tidak tertimpa
-        } else {
-            console.log(search)
-            await this.props.dispatch(searchProducts(search))
-            await this.setState({ products: this.props.products, productPages: this.props.products, pageOnload })
-        }
+        const index = (currentPage - 1) * limitPage
+        //_(items) masukan items kedalam lodash
+        //.slice(index) mulai data dari index, bisa juga dengan cara .slice(items, index)
+        //.take(limitPage) ambil data sesuai limit, 
+        //.value() convert dari lodash obj menjadi reguler array
+        const productPages = _(this.state.productPages).slice(index).take(limitPage).value()
+        await this.setState({ products: productPages })
     }
 
     render() {
-        let { products, limitPage, categories, branchs, filterProducts, productPages, pageOnload } = this.state
+        let { products, limitPage, categories, branchs, filterProducts, productPages, pageOnload, newProduct } = this.state
         let { page, nameCategory } = this.props.match.params
 
         //selama pageOnload kurang dari 3 maka handlePage akan terus terender. karena didalam method render itu selalu merender ulang
-        if(!nameCategory && pageOnload < 3){
-            this.handlePage(page)
-            this.productBySearch(this.props.match.params.name)
-        }else if(nameCategory && pageOnload < 3){
-            this.productByCategory(nameCategory)
+        if(nameCategory && pageOnload < 1){
+            this.handlePage(page, limitPage, nameCategory)
+        }else if(newProduct){
+            this.handlePage(page, limitPage, nameCategory)
         }
 
         const totalPages = Math.ceil(productPages.length / limitPage)
@@ -119,11 +106,15 @@ class Products extends Component {
                     </div>
                     <nav aria-label="Page navigation example">
                         <ul className="pagination">
-                            {
-                                pages.map(page => (
-                                    <li className={(page === parseInt(this.props.match.params.page)) ? "page-item active" : "page-item"} key={page}><Link className="page-link" to={(nameCategory) ? `/products/category/${nameCategory}/page/${page}` : `/products/search/all/page/${page}`} onClick={()=>this.handlePage(page)}>{page}</Link></li>
+                        {   //tampilkan pagination jika pages nya lebih dari 1
+                            (pages.length > 1) ?
+                                pages.map(numPage => (
+                                    <li className={(numPage === parseInt(page)) ? "page-item active" : "page-item"} key={numPage}>
+                                        <Link className="page-link" to={`/products/category/${nameCategory}/page/${numPage}`} onClick={() => this.handlePage(numPage, limitPage, nameCategory)}>{numPage}</Link>
+                                    </li>
                                 ))
-                            }
+                                : ''
+                        }
                         </ul>
                     </nav>
                 </Fragment>

@@ -49,19 +49,19 @@ export const postProduct = product => {
     }
 }
 
-export const deleteProduct = (id, nameCategory) => {
-    return {
-        type: 'DELETE_PRODUCT',
-        payload: axios.delete(`http://localhost:8000/api/products/${id}`).then(
-            window.location = `/products/category/${nameCategory}`
-        )
-    }
-}
-
 export const postProductsBranchs = (data) => {
     return {
         type: 'POST_PRODUCTS_BRANCHS',
         payload: axios.post(`http://localhost:8000/api/products-branchs/qty`, data).then(
+            )
+        }
+    }
+
+export const deleteProduct = (id, nameCategory) => {
+    return {
+        type: 'DELETE_PRODUCT',
+        payload: axios.delete(`http://localhost:8000/api/products/${id}`).then(
+            window.location = `/products/category/${nameCategory}/page/1`
         )
     }
 }

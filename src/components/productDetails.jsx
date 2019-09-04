@@ -34,7 +34,11 @@ class ProductDetails extends Component {
         await this.setState({ branchs: this.props.branchs })
     }
 
-    deleteProduct = async id => {
+    onUpdate = async (product) =>{
+        console.log('product : ', product)
+    }
+
+    onDelete = async id => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -78,8 +82,8 @@ class ProductDetails extends Component {
                             <h3 style={{ fontWeight: 'bold' }}>{name}</h3>
                         </div>
                         <div className="col-md-4 text-right">
-                            <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1"/>
-                            <button className="btn btn-danger btn-sm ml-1" onClick={()=>this.deleteProduct(id)}>Delete</button>
+                            <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1" name={name} onUpdate={this.onUpdate} />
+                            <button className="btn btn-danger btn-sm ml-1" onClick={()=>this.onDelete(id)}>Delete</button>
                         </div>
                     </div>
                     <div className="row">
