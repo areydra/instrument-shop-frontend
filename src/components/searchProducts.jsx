@@ -36,7 +36,7 @@ class SearchProducts extends Component {
         await this.props.dispatch(postProduct(product))
         //jika parameter nya berisi name category maka dispatcy getProducts berdasarkan nameCategory, jika tidak maka isi dengan getAllProducts
         await this.props.dispatch((nameCategory) ? getProductsByCategory(nameCategory) : getAllProducts())
-        await this.setState({ newProduct: true })
+        await this.setState({ products: this.props.products, newProduct: true })
         
         
         let { products } = this.state

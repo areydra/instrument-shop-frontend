@@ -217,6 +217,52 @@ const products = (state = initialState, action) => {
                 // products: action.payload.data.response
             }
 
+        case 'PATCH_PRODUCT_PENDING':
+            return{
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }    
+
+        case 'PATCH_PRODUCT_REJECTED':
+            return{
+                ...state,
+                isLoading: false,
+                isRejected: true,
+            }
+
+        case 'PATCH_PRODUCT_FULFILLED':
+            return{
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                // products: action.payload.data.response
+            }
+
+        case 'PATCH_PRODUCTS_BRANCHS_PENDING':
+            return{
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }    
+
+        case 'PATCH_PRODUCTS_BRANCHS_REJECTED':
+            return{
+                ...state,
+                isLoading: false,
+                isRejected: true,
+            }
+
+        case 'PATCH_PRODUCTS_BRANCHS_FULFILLED':
+            return{
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                // products: action.payload.data.response
+            }
+
 
         default:
             return state

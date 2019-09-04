@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 
 import ModalProduct from './modals/modalProduct'
 import {connect} from 'react-redux'
-import { getProductDetails, getProductsByBranchs, deleteProduct } from '../publics/redux/actions/products';
+import { getProductDetails, getProductsByBranchs, deleteProduct, patchProduct, patchProductsBranchs } from '../publics/redux/actions/products';
 import { getCategoryDetail } from '../publics/redux/actions/categories';
 
 
@@ -20,7 +20,8 @@ class ProductDetails extends Component {
         category: {
             id_category: 0
         },
-        branchs : []
+        branchs : [],
+        products : []
     }
 
     componentDidMount = async() => {
@@ -34,8 +35,42 @@ class ProductDetails extends Component {
         await this.setState({ branchs: this.props.branchs })
     }
 
-    onUpdate = async (product) =>{
-        console.log('product : ', product)
+    onUpdate = async (product, branchs, idProductBranchs) =>{
+        //mengambil data branchs dan dipisah beradasarkan key dan value, key = id_branch, value = quantity
+        let id_product = product.id //mengambil index terakhir dari products dengan cara length dikurang 1. kemudian ambil id nya
+        let id_branchs = Object.keys(branchs)
+        let id_products_branchs = Object.values(idProductBranchs)
+        let quantity   = Object.values(branchs)
+        let newBranchs = [] //membuat newBranchs dengan array kosong
+
+        //lalu menyatukan semua data yg terpisah dari id_product, id_branchs, dan quantity menjadi satu kedalam array newBranchs
+        for (let index = 0; index < id_branchs.length; index++) {
+            newBranchs.push({ id_product: id_product, id_branch: id_branchs[index], quantity: quantity[index] })
+        }
+
+        if(branchs.length === undefined){
+            // kemudian dispatch atau post data productsBranchsQty sesuai index newBranchs(data yg dimasukan)
+            for (let index = 0; index < newBranchs.length; index++) {
+                await this.props.dispatch(patchProductsBranchs(newBranchs[index], id_products_branchs[index]))
+            }
+        }
+        
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        })
+
+        Toast.fire({
+            type: 'success',
+            title: `Product ${product.name} has been updated`
+        }).then(()=>{
+            // EDIT PRODUCTS
+            this.props.dispatch(patchProduct(product, product.id))
+            window.location = `/product-details/${product.name}`
+        })
+
     }
 
     onDelete = async id => {

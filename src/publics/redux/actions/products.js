@@ -52,8 +52,7 @@ export const postProduct = product => {
 export const postProductsBranchs = (data) => {
     return {
         type: 'POST_PRODUCTS_BRANCHS',
-        payload: axios.post(`http://localhost:8000/api/products-branchs/qty`, data).then(
-            )
+        payload: axios.post(`http://localhost:8000/api/products-branchs/qty`, data)
         }
     }
 
@@ -63,5 +62,19 @@ export const deleteProduct = (id, nameCategory) => {
         payload: axios.delete(`http://localhost:8000/api/products/${id}`).then(
             window.location = `/products/category/${nameCategory}/page/1`
         )
+    }
+}
+
+export const patchProduct = (product, id) => {
+    return {
+        type: 'PATCH_PRODUCT',
+        payload: axios.patch(`http://localhost:8000/api/products/${id}`, product)
+    }
+}
+
+export const patchProductsBranchs = (branch, id) => {
+    return {
+        type: 'PATCH_PRODUCTS_BRANCHS',
+        payload: axios.patch(`http://localhost:8000/api/products-branchs/qty/${id}`, branch)
     }
 }

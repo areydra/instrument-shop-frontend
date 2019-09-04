@@ -35,7 +35,7 @@ class Products extends Component {
         await this.props.dispatch(postProduct(product))
         //jika parameter nya berisi name category maka dispatcy getProducts berdasarkan nameCategory, jika tidak maka isi dengan getAllProducts
         await this.props.dispatch((this.props.match.params.nameCategory) ? getProductsByCategory(this.props.match.params.nameCategory) : getAllProducts())
-        await this.setState({newProduct: true})
+        await this.setState({ products: this.props.products, newProduct: true })
 
         //mengambil data branchs dan dipisah beradasarkan key dan value, key = id_branch, value = quantity
         let id_product = this.state.products[this.state.products.length - 1].id //mengambil index terakhir dari products dengan cara length dikurang 1. kemudian ambil id nya

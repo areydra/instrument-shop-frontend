@@ -30,6 +30,29 @@ const branchs = (state = initialState, action) => {
                     branchs: action.payload.data.response
                 }
 
+        case 'GET_BRANCHS_BY_PRODUCT_PENDING':
+                return {
+                    ...state,
+                    isLoading: true,
+                    isRejected: false,
+                    isFulfilled: false
+                }
+    
+        case 'GET_BRANCHS_BY_PRODUCT_REJECTED':
+                return {
+                    ...state,
+                    isLoading: false,
+                    isRejected: true
+                }
+
+        case 'GET_BRANCHS_BY_PRODUCT_FULFILLED':
+                return {
+                    ...state,
+                    isLoading: true,
+                    isFulfilled: true,
+                    branchs: action.payload.data.response
+                }
+
         default:
             return state
     }

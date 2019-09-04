@@ -1,39 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import { getBranchs } from '../../publics/redux/actions/branchs'
+import { getBranchsByProduct, getBranchs } from '../../publics/redux/actions/branchs'
 import { getCategories } from '../../publics/redux/actions/categories'
-import { getProductDetails, getProductsByBranchs } from '../../publics/redux/actions/products'
+import { getProductDetails } from '../../publics/redux/actions/products'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class ModalProduct extends Component {
     state = {
         modal: false,
-        product: {},
-        branchs : {},
-        selectedBranchs : {},
+        product: [],
+        branchs : [],
+        allBranchs: [],
         categorySelected : '',
-        newBranch : {
-            id_branch: 0,
-            quantity: 0
-        }
-    };
+        idProductBranchs : [],
+        newBranch : []
+    }
 
     componentDidMount = async () => {
         await this.props.dispatch(getProductDetails(this.props.name))
-        await this.props.dispatch(getBranchs())
         await this.props.dispatch(getCategories())
+        await this.props.dispatch(getBranchs())
         let filterCategories = this.props.categories.filter(cat => cat.id === this.props.product.id_category)
-        await this.setState({ product: this.props.product, branchs: this.props.branchs, categorySelected: filterCategories[0].name })
+        await this.setState({ allBranchs: this.props.branchs, categorySelected: filterCategories[0].name, product: this.props.product })
 
-        await this.props.dispatch(getProductsByBranchs(this.props.product.id))
-        await this.setState({ selectedBranchs: this.props.selectedBranchs })
+        await this.props.dispatch(getBranchsByProduct(this.state.product.id))
     }
 
     toggle = () => {
+        // console.log(this.props.branchs)
         this.setState(prevState => ({
-            modal: !prevState.modal
+            modal: !prevState.modal,
+            branchs : this.props.branchs
         }));
+        console.log(this.state.branchs)
     }
 
     handleInput = event => {
@@ -42,10 +42,16 @@ class ModalProduct extends Component {
         this.setState({ product: newProduct })
     } 
  
+    handleBranchs = async event => {
+        let newBranchs = {...this.state.newBranch}
+        let idProductBranchs = {...this.state.idProductBranchs}
+        newBranchs[parseInt(event.target.name)] = event.target.value
+        idProductBranchs[event.target.name] = event.target.id
+        await this.setState({ newBranch: newBranchs, idProductBranchs })
+    }
+    
     render() {
         let { id_category, name, description, price, image_url } = this.state.product   
-        console.log(this.state.selectedBranchs)
-
         return (
             <React.Fragment>
                 <Button className={this.props.class} onClick={this.toggle} style={{border: 'none'}}>{this.props.action} Product</Button>
@@ -100,11 +106,30 @@ class ModalProduct extends Component {
                                     <input type="text" className="form-control" name="image_url" value={image_url} onChange={this.handleInput} />
                                 </div>
                             </div>
-
+                            <div className="row pt-3">
+                                <div className="col-md-3" style={{ marginRight: '-55px !important' }}>
+                                    <p style={{ fontWeight: 'bold' }}>Availible In :</p>
+                                </div>
+                            </div>
+                            {
+                                (this.state.branchs.length) ?
+                                    this.state.branchs.map(branch => (
+                                        <div className="row pt-3" key={branch.id}>
+                                            <div className="col-md-2"></div>
+                                            <div className="col-md-2" style={{ marginRight: '-55px !important' }}>
+                                                <p style={{ fontWeight: '500' }}>{branch.name}</p>
+                                            </div>
+                                            <div className="col-md-3">
+                                                <input type="number" className="form-control" name={branch.id_branch} id={branch.id} placeholder={branch.quantity} onChange={this.handleBranchs} />
+                                            </div>
+                                        </div>
+                                    ))
+                                : ''
+                            }
                         </form>
                     </ModalBody>
                     <ModalFooter style={{borderTop: 'none'}}>
-                        <button type="button" className={this.props.class} onClick={ () => this.props.onUpdate(this.state.product) }>Edit</button>
+                        <button type="button" className={this.props.class} onClick={() => this.props.onUpdate(this.state.product, this.state.newBranch, this.state.idProductBranchs ) }>Edit</button>
                     </ModalFooter>
                 </Modal>
             </React.Fragment>
@@ -115,7 +140,6 @@ class ModalProduct extends Component {
 const mapStateToProps = state => {
     return{
         product : state.products.products[0],
-        selectedBranchs : state.products.products,
         branchs : state.branchs.branchs,
         categories : state.categories.categories
     }
