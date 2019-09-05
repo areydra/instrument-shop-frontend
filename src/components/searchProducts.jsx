@@ -31,11 +31,10 @@ class SearchProducts extends Component {
 
 
     handleAddProduct = async (product, branchs) => {
-        let { nameCategory } = this.props.match.params
         // ADD PRODUCTS AND RE RENDER DATA PRODUCTS WITH getProducts
         await this.props.dispatch(postProduct(product))
         //jika parameter nya berisi name category maka dispatcy getProducts berdasarkan nameCategory, jika tidak maka isi dengan getAllProducts
-        await this.props.dispatch((nameCategory) ? getProductsByCategory(nameCategory) : getAllProducts())
+        await this.props.dispatch(getAllProducts())
         await this.setState({ products: this.props.products, newProduct: true })
         
         
@@ -89,9 +88,10 @@ class SearchProducts extends Component {
         let { page, search } = this.props.match.params
 
         //jalankan handle page selama ada parameter search dan pageOnload nilainya dibawah 1 atau 0. jika page onload diatas 0 maka tidak dijalankan
-        if(search && pageOnload < 1){ 
+        if(newProduct){
             this.handlePage(page, limitPage, search)
-        }else if(newProduct){
+        }
+        if(search && pageOnload < 1){ 
             this.handlePage(page, limitPage, search)
         }
 
@@ -104,7 +104,7 @@ class SearchProducts extends Component {
                 <div className="row pt-3">
                     <div className="card-group col-md-12">
                         {products.map(prd => (
-                            <ProductsCard key={prd.id} product={prd} products={filterProducts} onChangeStateProducts={this.props.onChangeStateProducts} />
+                            <ProductsCard key={prd.id} product={prd} products={filterProducts} onChangeStateProducts={this.props.onChangeStateProducts} prevPath={this.props.location.pathname} />
                         ))}
                     </div>
                 </div>

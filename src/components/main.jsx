@@ -10,7 +10,7 @@ import SearchProducts from './searchProducts'
 class Main extends Component {
     render() { 
         return ( 
-            <div className="container">
+            <div className="container" style={{marginTop:'7%'}}>
                 <Router>
                     <Search />
                     <Route path="/" exact component={Home} />

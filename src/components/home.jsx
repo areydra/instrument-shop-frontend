@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux' 
+import Swal from 'sweetalert2'
 
 import ModalCategory from './modals/modalCategory'
 import HomeCard from './card/homeCard'
@@ -20,6 +21,17 @@ class Home extends Component {
         await this.props.dispatch(getCategories())
         this.setState({ categories: this.props.categories })
 
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        })
+
+        Toast.fire({
+            type: 'success',
+            title: `Category ${newCategory.name} has been created`
+        })
     }
 
     render() {        

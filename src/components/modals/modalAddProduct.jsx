@@ -52,7 +52,7 @@ class ModalAddProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Product Name</p>
                                 </div>
                                 <div className="col-md-9">
-                                    <input type="text" name="name" className="form-control" onChange={this.handleForms} />
+                                    <input required type="text" name="name" className="form-control" onChange={this.handleForms} />
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -60,7 +60,7 @@ class ModalAddProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Category</p>
                                 </div>
                                 <div className="col-md-4">
-                                    <select className="form-control" name="id_category" onChange={this.handleForms}>
+                                    <select required className="form-control" name="id_category" onChange={this.handleForms}>
                                         <option hidden>Category</option>
                                         {
                                             this.props.categories.map(category => (
@@ -75,7 +75,7 @@ class ModalAddProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Price</p>
                                 </div>
                                 <div className="col-md-4">
-                                    <input type="text" className="form-control" name="price" onChange={this.handleForms} />
+                                    <input required type="number" className="form-control" name="price" onChange={this.handleForms} />
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -83,7 +83,7 @@ class ModalAddProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Description</p>
                                 </div>
                                 <div className="col-md-9">
-                                    <textarea name="description" id="" cols="30" rows="5" className="form-control" onChange={this.handleForms} ></textarea>
+                                    <textarea required name="description" id="" cols="30" rows="5" className="form-control" onChange={this.handleForms} ></textarea>
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -91,7 +91,7 @@ class ModalAddProduct extends Component {
                                     <p style={{ fontWeight: 'bold' }}>Image Url</p>
                                 </div>
                                 <div className="col-md-9">
-                                    <input type="text" className="form-control" name="image_url" onChange={this.handleForms} />
+                                    <input required type="text" className="form-control" name="image_url" onChange={this.handleForms} />
                                 </div>
                             </div>
                             <div className="row pt-3">
@@ -107,7 +107,7 @@ class ModalAddProduct extends Component {
                                             <p style={{ fontWeight: '500' }}>{branch.name}</p>
                                         </div>
                                         <div className="col-md-3">
-                                            <input type="number" className="form-control" name={branch.name} id={branch.id} placeholder='QTY' onChange={this.handleBranchs} />
+                                            <input required type="number" className="form-control" name={branch.name} id={branch.id} placeholder='QTY' onChange={this.handleBranchs} />
                                         </div>
                                     </div>
                                 ))

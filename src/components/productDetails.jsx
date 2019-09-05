@@ -26,9 +26,14 @@ class ProductDetails extends Component {
 
     componentDidMount = async() => {
         //Mengambil data product sesuai name
-        await this.props.dispatch(getProductDetails(this.props.match.params.name))
-        await this.props.dispatch(getCategoryDetail(this.props.product.id_category))
-        await this.setState({ product: this.props.product, category: this.props.categories })
+        if (this.props.location.product){
+            await this.props.dispatch(getCategoryDetail(this.props.location.product.id_category))
+            await this.setState({ product: this.props.location.product, category: this.props.categories })
+        }else{
+            await this.props.dispatch(getProductDetails(this.props.match.params.name))
+            await this.props.dispatch(getCategoryDetail(this.props.product.id_category))
+            await this.setState({ product: this.props.product, category: this.props.categories })
+        }
 
         //menngambil product qty by branch 
         await this.props.dispatch(getProductsByBranchs(this.state.product.id))
@@ -68,7 +73,7 @@ class ProductDetails extends Component {
         }).then(()=>{
             // EDIT PRODUCTS
             this.props.dispatch(patchProduct(product, product.id))
-            window.location = `/product-details/${product.name}`
+            window.location = `/product-details/${product.name.toLowerCase()}`
         })
 
     }
@@ -97,7 +102,15 @@ class ProductDetails extends Component {
                 })
                 
                 setTimeout(()=>{
-                    this.props.dispatch(deleteProduct(id, this.state.category.name))
+                    if(this.props.location.prevPath){
+                        this.props.dispatch(deleteProduct(id)).then(
+                            window.location = `${this.props.location.prevPath}`
+                        )
+                    }else{
+                        this.props.dispatch(deleteProduct(id)).then(
+                            window.location = `/products/category/${this.state.category.name}/page/1`
+                        )
+                    }
                 },1000)
             }
         })
@@ -109,7 +122,7 @@ class ProductDetails extends Component {
         return ( 
             <div className="row col-md-12" style={{ paddingTop: '100px' }}>
                 <div className="col-md-4">
-                    <img src={image_url} alt="COKS" />
+                    <img src={image_url} alt="COKS" width="300px" />
                 </div>
                 <div className="col-md-8">
                     <div className="row">
@@ -117,7 +130,7 @@ class ProductDetails extends Component {
                             <h3 style={{ fontWeight: 'bold' }}>{name}</h3>
                         </div>
                         <div className="col-md-4 text-right">
-                            <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1" name={name} onUpdate={this.onUpdate} />
+                            <ModalProduct action="Edit" class="btn btn-secondary btn-sm mr-1" name={name} product={this.state.product} onUpdate={this.onUpdate} />
                             <button className="btn btn-danger btn-sm ml-1" onClick={()=>this.onDelete(id)}>Delete</button>
                         </div>
                     </div>

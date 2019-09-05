@@ -100,7 +100,7 @@ class Products extends Component {
                     <div className="row pt-3">
                         <div className="card-group col-md-12">
                             {products.map(prd => (
-                                <ProductsCard key={prd.id} product={prd} products={filterProducts} onChangeStateProducts={this.props.onChangeStateProducts} />
+                                <ProductsCard key={prd.id} product={prd} products={filterProducts} onChangeStateProducts={this.props.onChangeStateProducts} prevPath={this.props.location.pathname} />
                                 ))}
                         </div>
                     </div>

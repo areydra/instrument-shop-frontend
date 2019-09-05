@@ -37,7 +37,7 @@ export const getProductsByBranchs = id_product => {
 
 export const getProductDetails = name => {
     return {
-        type: 'GET_PRODUCTS_BY_CATEGORY',
+        type: 'GET_PRODUCTS_DETAILS',
         payload: axios.get(`http://localhost:8000/api/products/${name}`)
     }
 }
@@ -56,12 +56,10 @@ export const postProductsBranchs = (data) => {
         }
     }
 
-export const deleteProduct = (id, nameCategory) => {
+export const deleteProduct = id => {
     return {
         type: 'DELETE_PRODUCT',
-        payload: axios.delete(`http://localhost:8000/api/products/${id}`).then(
-            window.location = `/products/category/${nameCategory}/page/1`
-        )
+        payload: axios.delete(`http://localhost:8000/api/products/${id}`)
     }
 }
 

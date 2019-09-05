@@ -31,6 +31,29 @@ const products = (state = initialState, action) => {
                 products: action.payload.data.response
             }
 
+        case 'GET_PRODUCTS_DETAILS_PENDING':
+            return{
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }    
+
+        case 'GET_PRODUCTS_DETAILS_REJECTED':
+            return{
+                ...state,
+                isLoading: false,
+                isRejected: true,
+            }
+
+        case 'GET_PRODUCTS_DETAILS_FULFILLED':
+            return{
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                products: action.payload.data.response
+            }
+
         case 'GET_ALL_PRODUCTS_PENDING':
             return{
                 ...state,
