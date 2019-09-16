@@ -1,0 +1,42 @@
+.background-cream {
+    background: #F5D372
+}
+
+.box-shadow {
+    box-shadow: 1px 2px 20px -10px rgba(0, 0, 0, 0.75) !important
+}
+
+.border-radius {
+    border-radius: 15px
+}
+
+.max-height-img {
+    height: 139px
+}
+
+.cursor-pointer {
+    cursor: pointer
+}
+
+.product-font-size {
+    font-size: 13px;
+    font-weight: 500
+}
+
+.paragraph {
+    text-indent: 30px;
+    text-align: justify
+}
+
+.button-hover {
+    color: white
+}
+
+.button-hover:hover {
+    color: #F5D372;
+    background: white
+}
+
+.w-5 {
+    width: 5%
+}
