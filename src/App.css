@@ -11,32 +11,32 @@
 }
 
 .max-height-img {
-  height: 139px
+  height: 139px !important
 }
 
 .cursor-pointer {
-  cursor: pointer
+  cursor: pointer !important
 }
 
 .product-font-size {
-  font-size: 13px;
-  font-weight: 500
+  font-size: 13px !important;
+  font-weight: 500 !important
 }
 
 .paragraph {
-  text-indent: 30px;
-  text-align: justify
+  text-indent: 30px !important;
+  text-align: justify !important
 }
 
 .button-hover {
-  color: white
+  color: white !important
 }
 
 .button-hover:hover {
-  color: #F5D372;
-  background: white
+  color: #F5D372 !important;
+  background: white !important
 }
 
 .w-5 {
-  width: 5%
+  width: 5% !important
 }

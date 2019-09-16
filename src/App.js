@@ -6,6 +6,9 @@ import Header from './components/header'
 import Main from './components/main'
 import Footer from './components/footer'
 
+import Login from './components/auth/login'
+import Register from './components/auth/register'
+
 import './App.css'
 
 class App extends Component {
@@ -20,6 +23,22 @@ class App extends Component {
           <Route path="/admin" component={ Admin } />
         </Router>
        );
+    }else if(this.state.path === 'login'){
+      return (
+          <Router>
+              <Header />
+                <Route path="/login" component={ Login } />    
+              <Footer />
+          </Router>
+      )
+    }else if(this.state.path === 'register'){
+      return (
+        <Router>
+            <Header />
+              <Route path="/register" component={ Register } />
+            <Footer />
+        </Router>
+      )
     }else{
       return (
         <Fragment>

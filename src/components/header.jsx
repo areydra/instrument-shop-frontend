@@ -1,7 +1,5 @@
 import React from 'react'
 import Brand from '../assets/logo/Brand.png'
-import Search from '../assets/icons/search.png'
-import Option from '../assets/icons/option.png'
 
 const Header = () => {
     return ( 
@@ -25,21 +23,6 @@ const Header = () => {
                     </ul>
                 </div>
             </nav>
-            <div className="container p-4" style={{marginTop: '12vh'}}>
-                <div className="row">
-                    <div className="col-12 col-md-11">
-                        <div className="input-group box-shadow" >
-                            <div className="input-group-prepend cursor-pointer">
-                                <span className="input-group-text" style={{background: 'none'}}><img src={ Search } height="24px" alt="search" /></span>
-                            </div>
-                            <input type="text" className="form-control" placeholder="Search here..." style={{borderLeft: 'none'}} />
-                        </div>
-                    </div>
-                    <div className="d-none d-md-block col-md-1 align-self-center p-1 text-center box-shadow rounded">
-                        <img src={ Option } width="25" alt="..." />
-                    </div>
-                </div>
-            </div>        
         </header>
      );
 }

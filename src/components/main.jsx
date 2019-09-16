@@ -10,10 +10,13 @@ import Cart from './pages/cart'
 import Wishlist from './pages/wishlist'
 import Checkout from './pages/checkout'
 
+import Search from './search'
+
 const Main = () => {
     return ( 
         <Router>
             <main className="container">                    
+                <Search />
                 <div className="row p-3 pt-4">
                     <div className="row ml-md-1">
                         
