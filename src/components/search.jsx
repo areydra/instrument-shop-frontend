@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import SearchIcon from '../assets/icons/search.png'
 import Option from '../assets/icons/option.png'
@@ -10,7 +11,9 @@ const Search = () => {
                 <div className="col-12 col-md-11">
                     <div className="input-group box-shadow" >
                         <div className="input-group-prepend cursor-pointer">
-                            <span className="input-group-text" style={{ background: 'none' }}><img src={ SearchIcon } height="24px" alt="search" /></span>
+                            <Link to="/products/search/blabla">
+                                <span className="input-group-text" style={{ background: 'none' }}><img src={ SearchIcon } height="24px" alt="search" /></span>
+                            </Link>
                         </div>
                         <input type="text" className="form-control" placeholder="Search here..." style={{ borderLeft: 'none' }} />
                     </div>
