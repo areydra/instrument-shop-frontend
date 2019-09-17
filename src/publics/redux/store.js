@@ -5,9 +5,6 @@ import promiseMiddleware from 'redux-promise-middleware'
 import reducers from './reducers/root'
 
 const logger = createLogger()
-const store  = createStore({
-    reducers,
-    applyMiddleware(logger, promiseMiddleware)
-})
+const store  = createStore(reducers, applyMiddleware(logger, promiseMiddleware))
 
 export default store

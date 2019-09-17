@@ -1,7 +1,14 @@
 import React from 'react'
 import Brand from '../assets/logo/Brand.png'
+import localStorage from 'local-storage'
 
 const Header = () => {
+    
+    const handleLogout = async() => {
+        await localStorage.remove('token')
+        window.location = '/login'
+    }
+
     return ( 
         <header>
             <nav className="navbar navbar-expand-md background-cream fixed-top">
@@ -17,9 +24,16 @@ const Header = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <a className="nav-link text-dark" href="/login">Login</a>
-                        </li>
+                        {
+                            (localStorage.get('token')) ?
+                                <li className="nav-item">
+                                    <p className="nav-link text-dark cursor-pointer" onClick={ handleLogout }>logout</p>
+                                </li>
+                            : 
+                                <li className="nav-item">
+                                    <a className="nav-link text-dark" href="/login">login</a>
+                                </li>
+                        }
                     </ul>
                 </div>
             </nav>

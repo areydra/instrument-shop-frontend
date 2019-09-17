@@ -18,10 +18,10 @@ const Main = () => {
             <main className="container">                    
                 <Search />
                 <div className="row p-3 pt-4">
-                    <div className="row ml-md-1">
+                    <div className="row ml-md-1 w-100" style={{ margin: '2.5vh 0' }}>
                         
                         <Route path="/" exact component={ Home } />
-                        <Route path="/products/:category" component={ Products } />
+                        <Route path="/products/category/:category" component={ Products } />
                         <Route path="/products/search/:search" component={ SearchProducts } />
                         <Route path="/product-details/:product" component={ ProductDetails } />
 

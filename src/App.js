@@ -1,6 +1,8 @@
 import { Provider } from 'react-redux'
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import localStorage from 'local-storage'
+import jwt from 'jsonwebtoken'
 
 import Admin from './components/admin/main'
 import Header from './components/header'
@@ -18,8 +20,14 @@ class App extends Component {
     path: window.location.pathname.split('/')[1] // mengubah pathname menjadi array yg dipisah dari "/" dan mengambil path indeks ke 1
    }
 
-  render() { 
-    if(this.state.path === 'admin'){
+   render() { 
+     
+     //cek jika token sudah expired maka remove token yg ada di localstorage
+     jwt.verify(localStorage.get('token'), 'areyGanteng', async (err, decode) => {
+         (err) ? await localStorage.remove('token') : console.log(decode)
+     })
+
+     if(this.state.path === 'admin'){
       return ( 
         <Router>
           <Provider store={ store }>

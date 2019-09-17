@@ -4,66 +4,29 @@ import { Link } from 'react-router-dom'
 const ProductsCard = props => {
     return (
     <React.Fragment>
-        <div className="col-sm-3 p-2">
-            <Link to="/product-details/violin" style={{ textDecoration: 'none' }}>
-                <div className="card border-radius background-cream cursor-pointer">
-                    <div className="card-body d-flex flex-column p-2 align-self-center">
-                        <div>
-                            <img className="img-fluid max-height-img" src="https://i.imgur.com/3W4bCSh.png"
-                            alt=".." />
+        {
+            props.products.map(product => (
+                <div className="col-sm-3 p-2" key={ product.id }>
+                    <Link to={"/product-details/" + product.name.toLowerCase()} style={{ textDecoration: 'none' }}>
+                        <div className="card border-radius background-cream cursor-pointer">
+                            <div className="card-body d-flex flex-column p-2">
+                                <div className="align-self-center">
+                                    <img className="img-fluid max-height-img" src={ product.image }
+                                        alt=".." />
+                                </div>
+                                <div className="align-self-center pt-3">
+                                    <p className="card-title text-dark text-center product-font-size">
+                                        { 
+                                            (product.name.length > 29) ? product.name.substr(0, 29) + '...' : product.name
+                                        }
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="align-self-center pt-3">
-                            <p className="card-title text-dark text-center product-font-size">Yamaha Violin A500</p>
-                        </div>
-                    </div>
+                    </Link>
                 </div>
-            </Link>
-        </div>
-            <div className="col-sm-3 p-2">
-                <Link to="/product-details/violin" style={{ textDecoration: 'none' }}>
-                    <div className="card border-radius background-cream cursor-pointer">
-                        <div className="card-body d-flex flex-column p-2 align-self-center">
-                            <div>
-                                <img className="img-fluid max-height-img" src="https://i.imgur.com/3W4bCSh.png"
-                                    alt=".." />
-                            </div>
-                            <div className="align-self-center pt-3">
-                                <p className="card-title text-dark text-center product-font-size">Yamaha Violin A500</p>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
-            </div>
-            <div className="col-sm-3 p-2">
-                <Link to="/product-details/violin" style={{ textDecoration: 'none' }}>
-                    <div className="card border-radius background-cream cursor-pointer">
-                        <div className="card-body d-flex flex-column p-2 align-self-center">
-                            <div>
-                                <img className="img-fluid max-height-img" src="https://i.imgur.com/3W4bCSh.png"
-                                    alt=".." />
-                            </div>
-                            <div className="align-self-center pt-3">
-                                <p className="card-title text-dark text-center product-font-size">Yamaha Violin A500</p>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
-            </div>
-            <div className="col-sm-3 p-2">
-                <Link to="/product-details/violin" style={{ textDecoration: 'none' }}>
-                    <div className="card border-radius background-cream cursor-pointer">
-                        <div className="card-body d-flex flex-column p-2 align-self-center">
-                            <div>
-                                <img className="img-fluid max-height-img" src="https://i.imgur.com/3W4bCSh.png"
-                                    alt=".." />
-                            </div>
-                            <div className="align-self-center pt-3">
-                                <p className="card-title text-dark text-center product-font-size">Yamaha Violin A500</p>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
-            </div>
+            ))
+        }
     </React.Fragment>
     );
 }

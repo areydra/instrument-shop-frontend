@@ -1,25 +1,95 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import localStorage from 'local-storage'
+import Swal from 'sweetalert2'
 
-const Login = () => {
-    return ( 
-        <main style={{ margin: "30.5vh 0 25vh 0"}}>
-            <div className="container p-4">
-                <div className="row">
-                    <h2 className="w-100 text-center">Login</h2>
-                </div>
-                <div className="row justify-content-center">
-                    <div className="col-9 col-md-5">
-                        <input type="email" className="form-control mb-2" placeholder="Email" />
-                        <input type="email" className="form-control mt-2" placeholder="Password" />
+import { login } from '../../publics/redux/actions/auth'
+
+class Login extends Component {
+    state = { 
+        user : {
+            email : '',
+            password : ''
+        },
+        token : '',
+        error : {}
+     }
+
+     componentDidMount = async() => {
+         if(localStorage.get('token')) {
+             window.location = '/'
+         }
+     }
+
+     handleForm = async event => {
+         let user = { ...this.state.user }
+         user[event.target.name] = event.target.value
+         await this.setState({ user })
+     }
+
+     handleLogin = async() => {
+        await this.props.dispatch(login(this.state.user))
+
+        if(this.props.error){
+            let user = { ...this.state.user }
+            user['password'] = ''
+
+            await this.setState({ error: this.props.error.message, user })
+        }else{
+            await localStorage.set('token', this.props.user.token)
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000
+            })
+
+            Toast.fire({
+                type: 'success',
+                title: 'Signed in successfully'
+            }).then(()=>{
+                window.location = '/'
+            })
+        }
+     }
+
+    render() { 
+        return (
+            <main style={{ margin: "30.5vh 0 25vh 0" }}>
+                <div className="container p-4">
+                    <div className="row">
+                        <h2 className="w-100 text-center">Login</h2>
                     </div>
-                    <button className="btn background-cream font-weight-bold button-hover" style={{width: "5rem"}}>Login</button>
+                    {
+                        (this.state.error.length) ?
+                            <div className="row justify-content-center">
+                                <div className="col-9 col-md-5 alert alert-danger text-center">
+                                    <p>{this.state.error}</p>
+                                </div>
+                            </div>
+                        : ''
+                    }
+                    <div className="row justify-content-center">
+                        <div className="col-9 col-md-5">
+                            <input type="email" className="form-control mb-2" name="email" value={ this.state.user.email } placeholder="Email" onChange={ this.handleForm } />
+                            <input type="password" className="form-control mt-2" name="password" value={ this.state.user.password }  placeholder="Password" onChange={ this.handleForm } />
+                        </div>
+                        <button className="btn background-cream font-weight-bold button-hover" style={{ width: "5rem" }} onClick={ this.handleLogin } >Login</button>
+                    </div>
+                    <div className="row justify-content-center pt-2">
+                        <p className="text-center">You don't have an account? <a href="/register">Register here</a></p>
+                    </div>
                 </div>
-                <div className="row justify-content-center pt-2">
-                    <p className="text-center">You don't have an account? <a href="/register">Register here</a></p>
-                </div>
-            </div>
-        </main>
-     );
+            </main>
+        );
+    }
 }
  
-export default Login;
+const mapStateToProps = state => {
+    return {
+        error : state.auth.user.message,
+        user : state.auth.user.responses
+    }
+}
+
+export default connect(mapStateToProps)(Login);
