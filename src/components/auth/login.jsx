@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import localStorage from 'local-storage'
 import Swal from 'sweetalert2'
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 
 import { login } from '../../publics/redux/actions/auth'
 
@@ -30,7 +31,7 @@ class Login extends Component {
      handleLogin = async() => {
         await this.props.dispatch(login(this.state.user))
 
-        if(this.props.error){
+        if (this.props.error) {
             let user = { ...this.state.user }
             user['password'] = ''
 
@@ -54,6 +55,8 @@ class Login extends Component {
      }
 
     render() { 
+        let handleForm = this.handleForm
+        let { email, password } = this.state.user
         return (
             <main style={{ margin: "30.5vh 0 25vh 0" }}>
                 <div className="container p-4">
@@ -71,10 +74,32 @@ class Login extends Component {
                     }
                     <div className="row justify-content-center">
                         <div className="col-9 col-md-5">
-                            <input type="email" className="form-control mb-2" name="email" value={ this.state.user.email } placeholder="Email" onChange={ this.handleForm } />
-                            <input type="password" className="form-control mt-2" name="password" value={ this.state.user.password }  placeholder="Password" onChange={ this.handleForm } />
+                            <ValidatorForm
+                                ref="form"
+                                onSubmit={ this.handleLogin }
+                            >
+                                <TextValidator
+                                    label="Email"
+                                    className="form-control mb-5"
+                                    onChange={ handleForm }
+                                    name="email"
+                                    value={ email }
+                                    validators={['required', 'isEmail']}
+                                    errorMessages={['this field is required', 'email is not valid']}
+                                />
+                                <TextValidator
+                                    label="Password"
+                                    type="password"
+                                    className="form-control mb-5"
+                                    onChange={ handleForm }
+                                    name="password"
+                                    value={ password }
+                                    validators={['required']}
+                                    errorMessages={['this field is required', 'password is not valid']}
+                                />
+                                <button type="submit" className="btn background-cream mt-2 form-control button-hover">Login</button>
+                            </ValidatorForm>
                         </div>
-                        <button className="btn background-cream font-weight-bold button-hover" style={{ width: "5rem" }} onClick={ this.handleLogin } >Login</button>
                     </div>
                     <div className="row justify-content-center pt-2">
                         <p className="text-center">You don't have an account? <a href="/register">Register here</a></p>
@@ -87,7 +112,7 @@ class Login extends Component {
  
 const mapStateToProps = state => {
     return {
-        error : state.auth.user.message,
+        error : state.auth.user.error,
         user : state.auth.user.responses
     }
 }

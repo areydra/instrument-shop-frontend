@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-export const getProducts = () => {
+export const getProducts = (offset, limit) => {
     return {
         type : 'GET_PRODUCTS',
-        payload : axios.get('http://localhost:5000/api/products')
+        payload : axios.get(`http://localhost:5000/api/products/${offset}/${limit}`)
     }
 }
 
@@ -18,5 +18,12 @@ export const getProductDetails = product => {
     return {
         type: 'GET_PRODUCT_DETAILS',
         payload: axios.get(`http://localhost:5000/api/products/${product}`)
+    }
+}
+
+export const getSearchProducts = (product, offset, limit) => {
+    return {
+        type: 'GET_SEARCH_PRODUCTS',
+        payload: axios.get(`http://localhost:5000/api/products/search/${product}/${offset}/${limit}`)
     }
 }

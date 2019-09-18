@@ -21,9 +21,8 @@ class App extends Component {
    }
 
    render() { 
-     
      //cek jika token sudah expired maka remove token yg ada di localstorage
-     jwt.verify(localStorage.get('token'), 'areyGanteng', async (err, decode) => {
+     jwt.verify(localStorage.get('token'), process.env.SECRET_KEY, async (err, decode) => {
          (err) ? await localStorage.remove('token') : console.log(decode)
      })
 

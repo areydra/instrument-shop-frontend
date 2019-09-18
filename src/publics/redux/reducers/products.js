@@ -70,6 +70,27 @@ const products = (state = initialState, action) => {
                 products : action.payload.data.responses
             }
 
+        case 'GET_SEARCH_PRODUCTS_PENDING' :
+            return{
+                ...state,
+                isLoading : true,
+                isRejected : false,
+                isFulfilled : false
+            }
+        case 'GET_SEARCH_PRODUCTS_REJECTED' :
+            return{
+                ...state,
+                isLoading : false,
+                isRejected : true
+            }
+        case 'GET_SEARCH_PRODUCTS_FULFILLED' :
+            return{
+                ...state,
+                isLoading : false,
+                isFulfilled : true,
+                products : action.payload.data.responses
+            }
+
         default: 
             return state
     }

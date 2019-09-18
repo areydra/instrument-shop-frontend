@@ -22,7 +22,7 @@ const Main = () => {
                         
                         <Route path="/" exact component={ Home } />
                         <Route path="/products/category/:category" component={ Products } />
-                        <Route path="/products/search/:search" component={ SearchProducts } />
+                        <Route path="/products/search/:search/:offset/:limit" component={ SearchProducts } />
                         <Route path="/product-details/:product" component={ ProductDetails } />
 
                         <Route path="/cart" component={ Cart } />

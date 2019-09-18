@@ -9,7 +9,7 @@ class Products extends Component {
     state = {
         products : [],
         offset : 0,
-        limit : 10,
+        limit : process.env.LIMIT_PAGE,
     }
 
     componentDidMount = async() => {
