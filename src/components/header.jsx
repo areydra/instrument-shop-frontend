@@ -26,7 +26,9 @@ const Header = () => {
                     <ul className="navbar-nav ml-auto">
                         {
                             (localStorage.get('token')) ?
-                                <li className="nav-item">
+                                <li className="nav-item d-flex flex-columns">
+                                    <a className="nav-link text-danger cursor-pointer" href="/wishlists">Your Wishlists</a>
+                                    <a className="nav-link text-danger cursor-pointer" href="/carts">Your Carts</a>
                                     <p className="nav-link text-dark cursor-pointer" onClick={ handleLogout }>logout</p>
                                 </li>
                             : 

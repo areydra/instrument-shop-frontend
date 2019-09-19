@@ -25,9 +25,9 @@ const Main = () => {
                         <Route path="/products/search/:search/:offset/:limit" component={ SearchProducts } />
                         <Route path="/product-details/:product" component={ ProductDetails } />
 
-                        <Route path="/cart" component={ Cart } />
-                        <Route path="/wishlist" component={ Wishlist } />
-                        <Route path="/checkout" component={ Checkout } />
+                        <Route path="/carts" component={Cart} />
+                        <Route path="/wishlists" component={Wishlist} />
+                        <Route path="/checkout" component={Checkout} />
 
                     </div>
                 </div>

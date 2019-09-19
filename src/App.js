@@ -15,6 +15,8 @@ import Register from './components/auth/register'
 import './App.css'
 import store from './publics/redux/store'
 
+require('dotenv/config')
+
 class App extends Component {
   state = { 
     path: window.location.pathname.split('/')[1] // mengubah pathname menjadi array yg dipisah dari "/" dan mengambil path indeks ke 1
@@ -22,8 +24,8 @@ class App extends Component {
 
    render() { 
      //cek jika token sudah expired maka remove token yg ada di localstorage
-     jwt.verify(localStorage.get('token'), process.env.SECRET_KEY, async (err, decode) => {
-         (err) ? await localStorage.remove('token') : console.log(decode)
+     jwt.verify(localStorage.get('token'), process.env.REACT_APP_SECRET_KEY, async (err, decode) => {
+         (err) ? await localStorage.remove('token') : localStorage.set('user', decode)
      })
 
      if(this.state.path === 'admin'){

@@ -6,7 +6,7 @@ import Option from '../assets/icons/option.png'
 class Search extends Component {
     state = { 
         search : '',
-        limit: process.env.LIMIT_PAGE
+        limit: process.env.REACT_APP_LIMIT_PAGE
      }
 
     handleForm = async event => {
