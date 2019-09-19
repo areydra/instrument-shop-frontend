@@ -1,99 +1,73 @@
 import React, { Component } from 'react'
+import localStorage from 'local-storage'
+import { connect } from 'react-redux'
+import moment from 'moment'
+
+import { getTransactionsByUser } from '../../publics/redux/actions/transactions'
+
 
 class Checkout extends Component {
-    state = {  }
+    state = { 
+        transactions : {}
+     }
+
+     componentDidMount = async() => {
+         let id_user = localStorage.get('user').id
+         await this.props.dispatch(getTransactionsByUser(id_user))
+         await this.setState({ transactions: this.props.transactions })
+     }
+
     render() { 
+        let { transactions } = this.state  
         return ( 
             <div className="container p-4">
-                <h3>Checkout Lists :</h3>
+                <h3>Transactions Lists :</h3>
                 <table className="table">
                     <thead>
                         <tr>
                             <th scope="col" className="w-5 text-center">#</th>
-                            <th scope="col" className="w-75 text-center">Product</th>
+                            <th scope="col" className="w-25 text-center">Product</th>
                             <th scope="col" className="w-5 text-center">Quantity</th>
                             <th scope="col" className="w-25 text-center">Price</th>
-                            <th scope="col" className="w-5 text-center"></th>
+                            <th scope="col" className="w-25 text-center">Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>
-                                <img src="https://i.imgur.com/3W4bCSh.png" className="img-fluid" width="50px" alt="..." />
-                                <span>Guitar</span>
-                            </td>
-                            <td>
-                                <input type="number" className="form-control" value="1" />
-                            </td>
-                            <td className="text-center">
-                                Rp. 2500000
-                            </td>
-                            <td>
-                                <a href="/">Delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>
-                                <img src="https://i.imgur.com/3W4bCSh.png" className="img-fluid" width="50px" alt="..." />
-                                <span>Guitar</span>
-                            </td>
-                            <td>
-                                <input type="number" className="form-control" value="1" />
-                            </td>
-                            <td className="text-center">
-                                Rp. 2500000
-                            </td>
-                            <td>
-                                <a href="/">Delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>
-                                <img src="https://i.imgur.com/3W4bCSh.png" className="img-fluid" width="50px" alt="..." />
-                                <span>Guitar</span>
-                            </td>
-                            <td>
-                                <input type="number" className="form-control" value="1" />
-                            </td>
-                            <td className="text-center">
-                                Rp. 2500000
-                            </td>
-                            <td>
-                                <a href="/">Delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>
-                                <img src="https://i.imgur.com/3W4bCSh.png" className="img-fluid" width="50px" alt="..." />
-                                <span>Guitar</span>
-                            </td>
-                            <td>
-                                <input type="number" className="form-control" value="1" />
-                            </td>
-                            <td className="text-center">
-                                Rp. 2500000
-                            </td>
-                            <td>
-                                <a href="/">Delete</a>
-                            </td>
-                        </tr>
+                        {
+                            (transactions.length) ?
+                                transactions.map((transaction, index) => (
+                                    <tr key={ index }>
+                                        <td>{ index+1 }</td>
+                                        <td className="text-center">
+                                            <img src={ transaction.image } className="img-fluid mr-3" width="50px" alt="..." />
+                                            <a href={"/product-details/" + transaction.product.toLowerCase()} style={{ textDecoration: 'none', color: 'black' }}>
+                                                { (transaction.product.length > 18) ? transaction.product.substr(0, 19) + '...' : transaction.product }
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <input type="number" className="form-control" readOnly value={ transaction.qty } />
+                                        </td>
+                                        <td className="text-center">
+                                            Rp. { (transaction.price * transaction.qty).toLocaleString(3) }
+                                        </td>
+                                        <td className="text-center">
+                                            { moment(transaction.created_at).format('LLL') }
+                                        </td>
+                                    </tr>
+                                ))
+                            : null
+                        }
                     </tbody>
                 </table>
-                <div className="row">
-                    <div className="col-7 col-md-6 align-self-center" style={{paddingTop: "1vh"}}>
-                        <h5>Total : Rp. 6000000</h5>
-                    </div>
-                    <div className="col-5 col-md-6 text-right">
-                        <button className="btn btn-success">Check out</button>
-                    </div>
-                </div>
             </div>
          );
     }
 }
  
-export default Checkout;
+const mapStateToProps = state => {
+    return {
+        transactions : state.transactions.transactions
+    }
+}
+
+export default connect(mapStateToProps)(Checkout);
