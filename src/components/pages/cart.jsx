@@ -4,6 +4,7 @@ import localStorage from 'local-storage'
 import Swal from 'sweetalert2'
 
 import { getCartsByUser, patchCarts, deleteCart } from '../../publics/redux/actions/carts'
+import ModalCheckout from '../utilities/modalCheckout'
 
 
 class Cart extends Component {
@@ -95,14 +96,19 @@ class Cart extends Component {
                         }
                     </tbody>
                 </table>
-                <div className="row">
-                    <div className="col-7 col-md-6 align-self-center" style={{paddingTop: '1vh'}}>
-                        <h5>Total : Rp. { total.toLocaleString(3) }</h5>
-                    </div>
-                    <div className="col-5 col-md-6 text-right">
-                        <button className="btn btn-success">Check out</button>
-                    </div>
-                </div>
+                {
+                    (carts.length) ?
+                        <div className="row">
+                            <div className="col-7 col-md-6 align-self-center" style={{ paddingTop: '1vh' }}>
+                                <h5>Total : Rp. {total.toLocaleString(3)}</h5>
+                            </div>
+
+                            <div className="col-5 col-md-6 text-right">
+                                <ModalCheckout products={carts} />
+                            </div>
+                        </div>
+                        : null
+                }
             </div>
          );
     }

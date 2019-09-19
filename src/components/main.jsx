@@ -8,7 +8,7 @@ import ProductDetails from './pages/productDetails'
 
 import Cart from './pages/cart'
 import Wishlist from './pages/wishlist'
-import Checkout from './pages/checkout'
+import Transactions from './pages/transactions'
 
 import Search from './search'
 
@@ -27,7 +27,7 @@ const Main = () => {
 
                         <Route path="/carts" component={Cart} />
                         <Route path="/wishlists" component={Wishlist} />
-                        <Route path="/checkout" component={Checkout} />
+                        <Route path="/transactions" component={Transactions} />
 
                     </div>
                 </div>

@@ -7,6 +7,13 @@ export const getWishlistsByUser = id_user => {
     }
 }
 
+export const getWishlistDetails = (id_user, id_product) => {
+    return {
+        type: 'GET_WISHLIST_DETAILS',
+        payload: axios.get(`http://localhost:5000/api/wishlists/details/${id_user}/${id_product}`)
+    }
+}
+
 export const postWishlist = product => {
     return {
         type : 'POST_WISHLIST',

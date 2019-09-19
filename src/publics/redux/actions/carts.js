@@ -29,6 +29,15 @@ export const patchCarts = (id,product) => {
 }
 
 export const deleteCart = id => {
+    if(id.length > 0){
+        id.map(cart => {
+            return {
+                type: 'DELETE_CART',
+                payload: axios.delete(`http://localhost:5000/api/carts/${cart.id}`)
+            }
+        })
+    }
+
     return {
         type : 'DELETE_CART',
         payload : axios.delete(`http://localhost:5000/api/carts/${id}`)

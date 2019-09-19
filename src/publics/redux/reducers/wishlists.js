@@ -28,6 +28,27 @@ const wishlist = (state = initialState, action) => {
                 wishlists: action.payload.data.responses
             }
 
+        case 'GET_WISHLIST_DETAILS_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case 'GET_WISHLIST_DETAILS_REJECTED':
+            return {
+                ...state,
+                isLoading: false,
+                isRejected: true
+            }
+        case 'GET_WISHLIST_DETAILS_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                wishlists: action.payload.data.responses
+            }
+
         case 'POST_WISHLISTS_PENDING':
             return {
                 ...state,
