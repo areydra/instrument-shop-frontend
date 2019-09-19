@@ -6,6 +6,7 @@ import products from './products'
 import wishlists from './wishlists'
 import categories from './categories'
 import transactions from './transactions'
+import requestProducts from './requestProducts'
 
 const reducers = combineReducers({
     auth,
@@ -13,7 +14,8 @@ const reducers = combineReducers({
     products,
     wishlists,
     categories,
-    transactions
+    transactions,
+    requestProducts
 })
 
 export default reducers

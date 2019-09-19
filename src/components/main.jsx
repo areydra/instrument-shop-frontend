@@ -9,6 +9,7 @@ import ProductDetails from './pages/productDetails'
 import Cart from './pages/cart'
 import Wishlist from './pages/wishlist'
 import Transactions from './pages/transactions'
+import RequestInstrument from './pages/requestInstrument'
 
 import Search from './search'
 
@@ -28,6 +29,7 @@ const Main = () => {
                         <Route path="/carts" component={Cart} />
                         <Route path="/wishlists" component={Wishlist} />
                         <Route path="/transactions" component={Transactions} />
+                        <Route path="/request-instrument" component={RequestInstrument} />
 
                     </div>
                 </div>
