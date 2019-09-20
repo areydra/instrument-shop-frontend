@@ -26,7 +26,7 @@ class Search extends Component {
 
     render() { 
         return (
-            <div className="container p-4" style={{ marginTop: '12vh' }}>
+            <div className="container p-4" style={{ marginTop: '15vh' }}>
                 <div className="row">
                     <div className="col-12 col-md-11">
                         <div className="input-group box-shadow" >

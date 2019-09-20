@@ -18,7 +18,7 @@ const Main = () => {
         <Router>
             <main className="container">                    
                 <Search />
-                <div className="row p-3 pt-4">
+                <div className="row p-3 pt-2">
                     <div className="row ml-md-1 w-100" style={{ margin: '2.5vh 0' }}>
                         
                         <Route path="/" exact component={ Home } />

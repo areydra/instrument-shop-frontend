@@ -20,7 +20,11 @@ class Cart extends Component {
                     (this.state.carts) ?
                         <span className="text-danger">In your carts  </span>
                         :
-                        <span className="text-danger cursor-pointer" onClick={() => (this.props.addToCart(this.props.id_user, this.props.id_product), this.setState({ carts: { id: 1 } }))}>
+                        <span className="text-danger cursor-pointer" 
+                            onClick={() => {
+                                this.props.addToCart(this.props.id_user, this.props.id_product)
+                                this.setState({ carts: { id: 1 } }) 
+                            } }>
                             Add to Cart
                         </span>
                 }

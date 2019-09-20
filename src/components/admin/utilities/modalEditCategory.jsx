@@ -51,7 +51,7 @@ class ModalEditCategory extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <div className="modal-footer" style={{ border: 'none !important' }}>
-                            <button type="button" className="btn btn-success" onClick={() => { this.props.handleEditCategory(this.state.category, this.props.index); this.setState({ modal: false }) }}>Add Category</button>
+                            <button type="button" className="btn btn-success" onClick={() => { this.props.handleEditCategory(this.state.category, this.props.index); this.setState({ modal: false }) }}>Edit Category</button>
                         </div>
                     </ModalFooter>
                 </Modal>

@@ -153,7 +153,7 @@ class Categories extends Component {
                                                     <td className="text-center"><img src={category.image} alt="..." width="50" /></td>
                                                     <td className="text-center">{category.name}</td>
                                                     <td className="text-center">
-                                                        <ModalEditCategory category={category} index={index} handleEditCategory={this.handleEditCategory} index={ index } />
+                                                        <ModalEditCategory category={category} index={index} handleEditCategory={this.handleEditCategory} />
                                                         <button className="btn btn-danger ml-1" onClick={() => this.handleDelete(category.id)}>Delete</button>
                                                     </td>
                                                 </tr>

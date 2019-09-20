@@ -46,8 +46,8 @@ class Header extends Component{
                             {
                                 (localStorage.get('token')) ?
                                     <li className="nav-item d-flex flex-columns">
-                                        <a className="nav-link text-danger cursor-pointer" href="/wishlists">Your Wishlists ({this.state.wishlists})</a>
-                                        <a className="nav-link text-danger cursor-pointer" href="/carts">Your Carts ({this.state.carts})</a>
+                                        <a className="nav-link text-danger cursor-pointer" href="/wishlists">Your Wishlists</a>
+                                        <a className="nav-link text-danger cursor-pointer" href="/carts">Your Carts</a>
                                         <a className="nav-link text-danger cursor-pointer" href="/transactions">Your Transactions</a>
                                         <a className="nav-link text-danger cursor-pointer" href="/request-instrument">Request Instrument</a>
                                         <p className="nav-link text-dark cursor-pointer" onClick={ this.handleLogout }>logout</p>
