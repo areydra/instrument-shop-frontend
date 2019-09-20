@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import jwt from 'jsonwebtoken'
 import { connect } from 'react-redux'
 import { Spinner } from 'reactstrap'
 import localStorage from 'local-storage'
@@ -19,7 +18,7 @@ class ProductDetails extends Component {
     }
 
     componentDidMount = async() => {
-        let user = await (localStorage.get('token')) ? jwt.decode(localStorage.get('token'), process.env.REACT_APP_SECRET_KEY) : {}
+        let user = await localStorage.get('user')
         await this.props.dispatch(getProductDetails(this.props.match.params.product))
         await this.setState({ product: this.props.product[0], user })
     }
@@ -59,6 +58,8 @@ class ProductDetails extends Component {
     render() {
         let token = localStorage.get('token')
         let { product, user } = this.state
+        console.log(product)
+
         if(product.id){
             return (
                 <Fragment>

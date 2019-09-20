@@ -24,7 +24,7 @@ class Cart extends Component {
      handleForm = async(id, index, event) => {
          if(event.target.value > 0){
              let carts = {...this.state.carts[index], qty: event.target.value}
-             await this.setState(prevState => ({ ...prevState.carts[index] = carts }))
+             await this.setState(prevState => ({ ...prevState.carts[index] = carts })) //prevState digunakan untuk mengambil data state sebelumnya
              await this.props.dispatch(patchCarts(id, carts))
          }
      }

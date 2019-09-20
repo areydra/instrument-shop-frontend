@@ -139,9 +139,9 @@ class Categories extends Component {
                                 <thead>
                                     <tr>
                                         <th scope="col" className="text-center w-5">#</th>
-                                        <th scope="col" className="text-center">Image</th>
-                                        <th scope="col" className="text-center" width="100px">Name</th>
-                                        <th scope="col" className="text-center" width="170px"></th>
+                                        <th scope="col" className="text-center w-25">Image</th>
+                                        <th scope="col" className="text-center w-50">Name</th>
+                                        <th scope="col" className="text-center w-25"></th>
                                     </tr>
                                 </thead>
                                 <tbody>

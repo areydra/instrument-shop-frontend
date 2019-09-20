@@ -40,6 +40,7 @@ class Register extends Component {
         }else{
             await this.props.dispatch(register(this.state.user)).then(() => {
                 localStorage.set('token', this.props.user.token)
+
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -57,7 +58,6 @@ class Register extends Component {
 
             })
         }
-        
     }
 
     render() { 
