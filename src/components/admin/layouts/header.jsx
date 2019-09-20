@@ -1,7 +1,22 @@
 import React from 'react'
+import localStorage from 'local-storage'
+
 import Brand from '../../../assets/logo/Brand.png'
 
+const handleLogout = () => {
+    localStorage.clear()
+    window.location = '/login'
+}
+
 const Header = () => {
+    if(localStorage.get('user')){
+        if(localStorage.get('user').id_level !== 1){
+            window.location = '/'
+        }
+    }else{
+        window.location = '/'
+    }
+
     return (
         <header>
             <nav className="navbar navbar-expand-md background-cream fixed-top">
@@ -18,7 +33,7 @@ const Header = () => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <a className="nav-link text-dark" href="/">Admin</a>
+                            <p className="nav-link text-dark cursor-pointer" onClick={ () => handleLogout() }>Logout</p>
                         </li>
                     </ul>
                 </div>

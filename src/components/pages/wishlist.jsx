@@ -131,7 +131,7 @@ class Wishlist extends Component {
                                 </div>
 
                                 <div className="col-5 col-md-6 text-right">
-                                    <ModalCheckout products={ wishlists } />
+                                    <ModalCheckout products={ wishlists } pathname={this.props.location.pathname} />
                                 </div>
                             </div>
                         : null

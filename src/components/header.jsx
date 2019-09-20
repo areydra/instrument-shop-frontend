@@ -18,11 +18,13 @@ class Header extends Component{
     }
 
     componentDidMount = async() => {
-        let id_user = localStorage.get('user').id
-        await this.props.dispatch(getWishlistsByUser(id_user))
-        await this.props.dispatch(getCartsByUser(id_user))
-
-        await this.setState({ wishlists: this.props.wishlists.length, carts: this.props.carts.length })
+        if(localStorage.get('user')){
+            let id_user = localStorage.get('user').id
+            await this.props.dispatch(getWishlistsByUser(id_user))
+            await this.props.dispatch(getCartsByUser(id_user))
+    
+            await this.setState({ wishlists: this.props.wishlists.length, carts: this.props.carts.length })
+        }
     }
 
     render() {

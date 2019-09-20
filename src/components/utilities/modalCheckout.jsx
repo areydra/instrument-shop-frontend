@@ -6,6 +6,7 @@ import { Button, Modal, ModalBody } from 'reactstrap';
 import { postTransaction } from '../../publics/redux/actions/transactions'
 import { deleteCart } from '../../publics/redux/actions/carts'
 import Print from '../pages/print'
+import { deleteWishlist } from '../../publics/redux/actions/wishlist';
 
 class ModalCheckout extends Component {
     state = {
@@ -36,7 +37,12 @@ class ModalCheckout extends Component {
                 type: 'success',
                 title: 'Succes checkout'
             }).then(async() => {
-                await this.props.dispatch(deleteCart(this.state.products))
+                if (this.props.pathname === '/carts') {
+                    await this.props.dispatch(deleteCart(this.state.products))
+                } else if (this.props.pathname === '/wishlists') {
+                    await this.props.dispatch(deleteWishlist(this.state.products))
+                }
+
                 window.location = '/transactions'
             })        
         })

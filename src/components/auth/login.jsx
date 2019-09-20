@@ -49,7 +49,11 @@ class Login extends Component {
                 type: 'success',
                 title: 'Signed in successfully'
             }).then(()=>{
-                window.location = '/'
+                if(this.props.user.id_level === 1){
+                    window.location = '/admin'
+                }else{
+                    window.location = '/'
+                }
             })
         }
      }

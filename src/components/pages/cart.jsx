@@ -104,7 +104,7 @@ class Cart extends Component {
                             </div>
 
                             <div className="col-5 col-md-6 text-right">
-                                <ModalCheckout products={carts} />
+                                <ModalCheckout products={carts} pathname={this.props.location.pathname} />
                             </div>
                         </div>
                         : null

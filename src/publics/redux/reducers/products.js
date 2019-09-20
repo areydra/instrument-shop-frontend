@@ -1,5 +1,7 @@
 const initialState = {
     products : [],
+    postProduct: [],
+    productsData: [],
     isLoading: false,
     isRejected: false,
     isFulfilled: false
@@ -26,6 +28,27 @@ const products = (state = initialState, action) => {
                 isLoading : false,
                 isFulfilled : true,
                 products : action.payload.data.responses
+            }
+
+        case 'GET_ALL_PRODUCTS_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case 'GET_ALL_PRODUCTS_REJECTED':
+            return {
+                ...state,
+                isLoading: false,
+                isRejected: true
+            }
+        case 'GET_ALL_PRODUCTS_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                productsData: action.payload.data.responses
             }
 
         case 'GET_PRODUCTS_BY_CATEGORY_PENDING' :
@@ -89,6 +112,68 @@ const products = (state = initialState, action) => {
                 isLoading : false,
                 isFulfilled : true,
                 products : action.payload.data.responses
+            }
+
+        case 'POST_PRODUCT_PENDING' :
+            return{
+                ...state,
+                isLoading : true,
+                isRejected : false,
+                isFulfilled : false
+            }
+        case 'POST_PRODUCT_REJECTED' :
+            return{
+                ...state,
+                isLoading : false,
+                isRejected : true
+            }
+        case 'POST_PRODUCT_FULFILLED' :
+            return{
+                ...state,
+                isLoading : false,
+                isFulfilled : true,
+                postProduct : action.payload.data.data
+            }
+
+        case 'PATCH_PRODUCT_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case 'PATCH_PRODUCT_REJECTED':
+            return {
+                ...state,
+                isLoading: false,
+                isRejected: true
+            }
+        case 'PATCH_PRODUCT_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+            }
+
+        case 'DELETE_PRODUCT_PENDING':
+            return {
+                ...state,
+                isLoading: true,
+                isRejected: false,
+                isFulfilled: false
+            }
+        case 'DELETE_PRODUCT_REJECTED':
+            return {
+                ...state,
+                isLoading: false,
+                isRejected: true
+            }
+        case 'DELETE_PRODUCT_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                isFulfilled: true,
+                postProduct: action.payload.data.data
             }
 
         default: 

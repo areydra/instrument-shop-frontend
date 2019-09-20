@@ -37,6 +37,15 @@ export const addPatchToCart = (id_cart, wishlist) => {
 
 
 export const deleteWishlist = id => {
+    if (id.length > 0) {
+        id.map(wishlist => {
+            return {
+                type: 'DELETE_WISHLIST',
+                payload: axios.delete(`http://localhost:5000/api/wishlists/${wishlist.id}`)
+            }
+        })
+    }
+ 
     return {
         type : 'DELETE_WISHLIST',
         payload : axios.delete(`http://localhost:5000/api/wishlists/${id}`)
