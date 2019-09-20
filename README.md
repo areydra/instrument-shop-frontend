@@ -13,7 +13,7 @@ npm i
 
 ```python
 - create databasen and import file instrument-shop.sql
-- create .env file with variable in file .env.example
+- create .env file with variable at file .env.example
 ```
 
 ### Note :
