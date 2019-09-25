@@ -4,7 +4,7 @@ import localStorage from 'local-storage'
 export const getTransactions = (z) => {
     return {
         type: 'GET_TRANSACTIONS',
-        payload: axios.get(`http://localhost:5000/api/transactions`, {
+        payload: axios.get(`https://instrument-shop-backend.herokuapp.com/api/transactions`, {
             headers: {
                 'x-auth-token' : localStorage.get('token')
             }
@@ -15,7 +15,7 @@ export const getTransactions = (z) => {
 export const getTransactionsPaginate = (offset, limit) => {
     return {
         type: 'GET_TRANSACTIONS_PAGINATE',
-        payload: axios.get(`http://localhost:5000/api/transactions/page/${offset}/${limit}`, {
+        payload: axios.get(`https://instrument-shop-backend.herokuapp.com/api/transactions/page/${offset}/${limit}`, {
             headers: {
                 'x-auth-token' : localStorage.get('token')
             }
@@ -26,13 +26,13 @@ export const getTransactionsPaginate = (offset, limit) => {
 export const getTransactionsByUser = id_user => {
     return {
         type: 'GET_TRANSACTIONS_BY_USER',
-        payload: axios.get(`http://localhost:5000/api/transactions/user/${id_user}`)
+        payload: axios.get(`https://instrument-shop-backend.herokuapp.com/api/transactions/user/${id_user}`)
     }
 }
 
 export const postTransaction = product => {
     return {
         type: 'POST_TRANSACTION',
-        payload: axios.post(`http://localhost:5000/api/transactions`, product)
+        payload: axios.post(`https://instrument-shop-backend.herokuapp.com/api/transactions`, product)
     }
 }
